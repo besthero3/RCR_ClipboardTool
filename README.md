@@ -14,5 +14,7 @@ The tool works by copying the clipboard data every time Ctrl+C is used. This dat
 * Add a counter so there is not a post request to the server every time there is a new piece of clipboard_data
 * Rewrite the tool in C
 
-### Resoruces
-I consulted many resources for this project. Thank you to all of them. Some are listed in my code and can be seen in the libraries used. Some are not listed in my code but are listed in this document. 
+### Resources
+I consulted many resources for this project. Thank you to all of them. Some are listed in my code and can be seen in the libraries used. Some are not listed in my code but are listed in the Resources Consulted document in the GitHub.
+
+Thank you to Red Team and the Red Team Chief for consistently helping with this project, teaching about Red Team concepts that helped in the development of this project, and for providing the example code for a C2 server which was used in this project. 
