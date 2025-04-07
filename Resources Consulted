@@ -1,0 +1,302 @@
+The following resources were reviewed in the development of this project. 
+
+https://attack.mitre.org/techniques/T1115/ 
+
+For example, on Windows adversaries can access clipboard data by using clip.exe or Get-Clipboard.[1][2][3] Additionally, adversaries may monitor then replace users’ clipboard with their data (e.g., Transmitted Data Manipulation).[4] 
+
+Get-Clipboard - returns a string of the data in the clipboard… 
+
+https://answers.microsoft.com/en-us/windows/forum/all/clipboard-any-way-to-ensure-that-its-encrypted-and/e5b9a311-79c3-44a1-9f96-514f530b40cd One common thing is pasting passwords “from the clipboard. over time, we have become accustumed to using password management tools - to store our passwords. LastPass, OnePass, or Browser, all store passwords in some way. Then we go to them, copy them to the clipboard, then paste. Sometimes we allow the browser to "cache" these items, but that leaves them open to tools like NIRSoft's password validator which can export passwords from a browser to a text file. One way to prevent this is to create an internet key exchange between the browser library storing the pw and the field that the pw is being passed to.  This would prevent us from every posting the cleartext password on the clipboard, while still allowing a key to unlock the field that the pw provides.. it can present the pw but that field, be locked by the OS - as targed attribute with a specialized condition.” 
+
+
+
+https://stackoverflow.com/questions/14894993/running-windows-shell-commands-with-python 
+
+https://www.reddit.com/r/learnpython/comments/jnzi62/how_to_send_commands_to_windows_command_line_with/ 
+
+
+https://pypi.org/project/pyperclip/ – good library 
+https://docs.python.org/3/library/os.html 
+
+
+https://stackoverflow.com/questions/11063458/python-script-to-copy-text-to-clipboard 
+https://stackoverflow.com/questions/14894993/running-windows-shell-commands-with-python 
+https://answers.microsoft.com/en-us/windows/forum/all/clipboard-any-way-to-ensure-that-its-encrypted-and/e5b9a311-79c3-44a1-9f96-514f530b40cd 
+https://www.reddit.com/r/learnpython/comments/jnzi62/how_to_send_commands_to_windows_command_line_with/ 
+
+
+
+
+What process is run when the copy and paste is done? 
+https://pynput.readthedocs.io/en/latest/keyboard.html#:~:text=Synchronous%20event%20listening%20for%20the,Events%20. 
+
+https://ss64.com/nt/clip.html clipboard… 
+
+—-- 
+Python library: https://pypi.org/project/pyperclip/ 
+Invisible character: https://unicode-explorer.com/c/115F 
+W3 schools character: https://www.w3schools.com/python/gloss_python_random_number.asp 
+
+ https://www.w3schools.com/python/python_file_write.asp 
+Tool idea
+
+Want to learn FLask and HTTP to set up network connections… 
+Learning HTTP https://www.w3schools.com/html/default.asp to learn Flask 
+Tags end with backslash
+https://www.geeksforgeeks.org/html-tutorial/ 
+Took break at Tables
+HTML Cheat Sheet: https://www.geeksforgeeks.org/html-cheat-sheet/ 
+https://www.geeksforgeeks.org/flask-tutorial/ - flask 
+Also reviewed some requests from w3 schools - but should review more… 
+
+Github Clipboard: https://www.jetbrains.com/help/pycharm/adding-files-to-version-control.html#file_status 
+
+Scheduling tasks: 
+https://stackoverflow.com/questions/59125493/how-to-constantly-run-python-script-in-the-background-on-windows 
+https://www.quora.com/How-do-I-keep-a-Python-script-running-24-7-without-leaving-my-computer-continuously-on 
+https://www.geeksforgeeks.org/python-schedule-library/ 
+https://schedule.readthedocs.io/en/stable/ 
+
+USed: https://schedule.readthedocs.io/en/stable/examples.html 
+
+Keyboard: 
+https://pynput.readthedocs.io/en/latest/keyboard.html 
+https://www.geeksforgeeks.org/how-to-detect-if-a-specific-key-pressed-using-python/ 
+
+https://pypi.org/project/keyboard/ 
+https://github.com/boppreh/keyboard#api 
+
+https://github.com/boppreh/keyboard#api 
+
+Mouse library: https://github.com/boppreh/mouse 
+
+Mouse: 
+https://pynput.readthedocs.io/en/latest/mouse.html 
+https://github.com/boppreh/mouse?tab=readme-ov-file 
+
+Files: 
+
+https://stackoverflow.com/questions/68477/send-file-using-post-from-a-python-script file communicating - arguments
+
+https://stackoverflow.com/questions/43814625/for-line-in-file-not-working-python 
+
+Links Consulted during the project: 
+https://www.w3schools.com/python/python_lambda.asp#gsc.tab=0&gsc.q=python%20time
+https://www.w3schools.com/python/python_datetime.asp 
+https://packaging.python.org/en/latest/tutorials/installing-packages/
+https://www.geeksforgeeks.org/autorun-a-python-script-on-windows-startup/ 
+https://www.google.com/search?q=windows+registry+keys+explained&oq=windows+registry+keys+ex&gs_lcrp=EgZjaHJvbWUqBwgAEAAYgAQyBwgAEAAYgAQyBggBEEUYOTIICAIQABgWGB4yCAgDEAAYFhgeMggIBBAAGBYYHjINCAUQABiGAxiABBiKBTIKCAYQABiABBiiBNIBCDMzNTZqMGo3qAIAsAIA&sourceid=chrome&ie=UTF-8 
+https://www.google.com/search?q=creating+windows+tabs+from+python&oq=creating+windows+tabs+from+python&gs_lcrp=EgZjaHJvbWUyBggAEEUYOTIHCAEQIRigATIHCAIQIRigATIHCAMQIRigATIHCAQQIRigATIHCAUQIRifBTIHCAYQIRifBdIBCDc5NTlqMGo3qAIAsAIA&sourceid=chrome&ie=UTF-8 
+https://www.w3schools.com/python/python_variables_global.asp 
+https://www.google.com/search?q=what+windows+process+is+triggered+when+rightclick+and+copy+is+pressed&oq=what+windows+process+is+triggered+when+rightclick+and+copy+is+pressed&gs_lcrp=EgZjaHJvbWUyBggAEEUYOdIBCTE0MDM5ajBqN6gCALACAA&sourceid=chrome&ie=UTF-8 
+https://learn.microsoft.com/en-us/windows/win32/menurc/wm-contextmenu 
+https://www.geeksforgeeks.org/http-request-methods-python-requests/# 
+https://www.geeksforgeeks.org/http-request-methods-python-requests/#post 
+https://www.geeksforgeeks.org/post-method-python-requests/ 
+https://www.w3schools.com/python/ref_requests_post.asp 
+https://stackoverflow.com/questions/61926327/how-does-app-flask-name-works-exactly-in-a-flask-application 
+https://flask.palletsprojects.com/en/stable/quickstart/ 
+https://rit0-my.sharepoint.com/personal/ssvcs_rit_edu/_layouts/15/Doc.aspx?sourcedoc={6242176c-91e7-4d53-8da0-031dae3e4d95}&action=view&wd=target%2809_09_2024_Searching_Sorting.one%7Cbb1270d1-1d5d-483c-972f-1a8c936a83d2%2FFile%20IO%20%20Dataclasses%7C1d130ab0-7621-438a-ae46-b0f3f9014f43%2F%29&wdorigin=NavigationUrl RIT STUFF DOUBLE CHECK
+https://www.geeksforgeeks.org/how-to-open-a-file-using-the-with-statement/ 
+https://www.google.com/search?q=flask+post+requests+communicating+files&sca_esv=3c0fea230776b8f8&sxsrf=ADLYWIIpnf6bkgaFskQn5spSFxD9Kao18Q%3A1735429899146&ei=C49wZ6zQCKrg0PEPvv7o4AM&ved=0ahUKEwjsga-V1MuKAxUqMDQIHT4_GjwQ4dUDCBA&uact=5&oq=flask+post+requests+communicating+files&gs_lp=Egxnd3Mtd2l6LXNlcnAiJ2ZsYXNrIHBvc3QgcmVxdWVzdHMgY29tbXVuaWNhdGluZyBmaWxlczIFECEYoAEyBRAhGKABMgUQIRifBTIFECEYnwUyBRAhGJ8FMgUQIRifBTIFECEYnwUyBRAhGJ8FSJMXUNEQWLYVcAN4AJABAJgBpwGgAacFqgEDMy4zuAEDyAEA-AEBmAIIoAL-BMICChAAGLADGNYEGEfCAgUQIRirApgDAIgGAZAGCJIHAzQuNKAH_jA&sclient=gws-wiz-serp 
+https://blog.miguelgrinberg.com/post/handling-file-uploads-with-flask 
+https://www.postman.com/postman/postman-answers/request/xl862x7/upload-a-file?tab=overview 
+https://stackoverflow.com/questions/22567306/how-to-upload-file-with-python-requests 
+https://stackoverflow.com/questions/68477/send-file-using-post-from-a-python-script 
+https://requests.readthedocs.io/en/latest/user/quickstart/#post-a-multipart-encoded-file 
+https://www.google.com/search?q=python+io.UnsupportedOperation%3A+not+readable&sca_esv=c571f50dbaec8d60&sxsrf=ADLYWII_Bdcmnps5uWyOdv2viP5Ah2tcSQ%3A1735433486503&ei=Dp1wZ-OrHtvdwN4Pt8mMgQU&ved=0ahUKEwjj6vnD4cuKAxXbLtAFHbckI1AQ4dUDCBA&uact=5&oq=python+io.UnsupportedOperation%3A+not+readable&gs_lp=Egxnd3Mtd2l6LXNlcnAiLHB5dGhvbiBpby5VbnN1cHBvcnRlZE9wZXJhdGlvbjogbm90IHJlYWRhYmxlMgUQABiABDIGEAAYFhgeMgYQABgWGB4yCxAAGIAEGIYDGIoFMgsQABiABBiGAxiKBTIIEAAYgAQYogQyCBAAGKIEGIkFSP0QUP8GWPcMcAF4AZABAJgByAGgAeICqgEFMC4xLjG4AQPIAQD4AQH4AQKYAgOgAvcCwgIHECMYsAMYJ8ICChAAGLADGNYEGEfCAhkQLhiABBiwAxjRAxhDGMcBGMgDGIoF2AEBwgITEC4YgAQYsAMYQxjIAxiKBdgBAcICFhAuGIAEGLADGEMY1AIYyAMYigXYAQHCAgoQIxiABBgnGIoFwgIEECMYJ8ICEBAAGIAEGLEDGEMYgwEYigXCAg0QABiABBixAxhDGIoFwgIKEAAYgAQYQxiKBZgDAIgGAZAGDboGBAgBGAiSBwUxLjEuMaAH2w4&sclient=gws-wiz-serp 
+https://stackoverflow.com/questions/44901806/python-error-message-io-unsupportedoperation-not-readable 
+https://medium.com/@API4AI/post-a-file-via-http-request-the-ultimate-guide-b23fb70a3f73 
+https://stackoverflow.com/questions/17433833/how-to-get-post-data-from-request 
+https://www.google.com/search?q=get+data+insdie+a+text+file+from+a+post+request+python&oq=get+data+insdie+a+text+file+from+a+post+request+python&gs_lcrp=EgZjaHJvbWUyBggAEEUYOTIJCAEQIRgKGKABMgkIAhAhGAoYqwIyCQgDECEYChirAtIBCDgyMzBqMGo3qAIAsAIA&sourceid=chrome&ie=UTF-8
+https://stackoverflow.com/questions/56748901/how-to-extract-data-from-a-text-file-in-python/56749078 
+https://python-forum.io/thread-27986.html 
+https://www.geeksforgeeks.org/read-file-without-saving-in-flask/# 
+https://www.google.com/search?q=passing+a+text+file+through+post+request+but+the+file+is+blank&oq=passing+a+text+file+through+post+request+but+the+file+is+blank&gs_lcrp=EgZjaHJvbWUyBggAEEUYOdIBCTk3NTk3ajBqN6gCCLACAQ&sourceid=chrome&ie=UTF-8 
+https://www.w3schools.com/python/ref_file_read.asp 
+https://stackoverflow.com/questions/67251978/pythons-file-read-doesnt-return-the-string-inside-the-text-file 
+https://stackoverflow.com/questions/43814625/for-line-in-file-not-working-python 
+https://www.w3schools.com/python/python_file_handling.asp 
+https://stackoverflow.com/questions/5512811/builtins-typeerror-must-be-str-not-bytes 
+https://www.google.com/search?q=canonical+listener+python&sca_esv=35e4d6bf0b55a64b&sxsrf=ADLYWIKTlEGoAIKlRtbBR2xG00anHM760g%3A1734822153118&ei=CUlnZ5f2Bvrep84P5IGPmAQ&ved=0ahUKEwjXnr2R_LmKAxV678kDHeTAA0MQ4dUDCBA&uact=5&oq=canonical+listener+python&gs_lp=Egxnd3Mtd2l6LXNlcnAiGWNhbm9uaWNhbCBsaXN0ZW5lciBweXRob24yBRAhGKsCMgUQIRifBTIFECEYnwVIiA9Q1AFYow1wAXgBkAEBmAGECKABgRaqAQ8wLjMuMS4wLjEuMC4xLjG4AQPIAQD4AQGYAgegAvcSwgIKEAAYsAMY1gQYR8ICCBAAGIAEGKIEwgIFEAAY7wXCAgUQIRigAZgDAIgGAZAGCJIHCzEuMy4xLjUtMS4xoAfgJA&sclient=gws-wiz-serp 
+https://www.geeksforgeeks.org/how-to-detect-if-a-specific-key-pressed-using-python/ 
+https://pynput.readthedocs.io/en/latest/mouse.html 
+https://pypi.org/project/keyboard/ 
+https://schedule.readthedocs.io/en/stable/examples.html 
+https://www.w3schools.com/html/html_tables.asp 
+
+—-
+Used for readme formatting: 
+https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax 
+
+https://stackoverflow.com/questions/26960735/how-do-you-indent-a-bulleted-list-in-a-readme-file-using-github-flavored-markdow 
+
+https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet 
+https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#headers 
+
+
+
+
+
+
+
+
+
+
+Other Links Consulted: 
+
+https://www.w3schools.com/python/python_try_except.asp 
+https://superuser.com/questions/900032/detect-powershell-function-input-is-redirected 
+https://docs.python.org/3/c-api/call.html 
+https://tailscale.com/kb/1023/troubleshooting#disable-subnet-route-masquerading 
+https://tailscale.com/kb/1019/subnets?tab=linux#enable-ip-forwarding 
+https://tailscale.com/download/linux 
+https://docs.python.org/3/library/winreg.html 
+https://learn.microsoft.com/en-us/windows/win32/sysinfo/structure-of-the-registry 
+https://learn.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regsetkeyvaluea 
+https://docs.python.org/3/library/winreg.html 
+https://www.reddit.com/r/Tailscale/comments/1atcps8/pinging_local_ips_isnt_working_with_subnet_router/ 
+https://tailscale.com/kb/1023/troubleshooting
+https://tailscale.com/kb/1019/subnets?tab=linux  
+https://docs.pwntools.com/en/stable/install.html 
+https://dmcxblue.gitbook.io/red-team-notes/persistence/registry-keys-startup-folder 
+https://tailscale.com/kb/1019/subnets 
+https://www.landfx.com/kb/computers-networking/computer/3067-regkeys.html 
+https://intel471.com/blog/hunting-for-persistence-registry-run-keys-startup-folder 
+https://www.geeksforgeeks.org/find-path-to-the-given-file-using-python/ 
+https://learn.microsoft.com/en-us/windows/win32/setupapi/run-and-runonce-registry-keys 
+https://superuser.com/questions/1720083/how-does-windows-run-registry-key-search-for-executable 
+https://docs.python.org/3/library/winreg.html 
+https://stackoverflow.com/questions/11813435/im-trying-to-use-python-in-powershell 
+https://www.codewithharry.com/blogpost/how-to-find-python-installation-path/ 
+https://discuss.python.org/t/python-not-found-by-command-prompt/45612/3 
+https://stackoverflow.com/questions/6318156/adding-python-to-path-on-windows 
+https://www.geeksforgeeks.org/convert-python-script-to-exe-file/ 
+https://stackoverflow.com/questions/714877/setting-windows-powershell-environment-variables 
+https://www.yudhistiramauris.com/add-new-entry-to-path-variable-permanently-using-windows-powershell/ 
+https://superuser.com/questions/1292206/windows-10-how-a-normal-usernot-admin-set-path-variable-permanently-for-his 
+https://labs.jumpsec.com/running-once-running-twice-pwned-windows-registry-run-keys/ 
+https://stackoverflow.com/questions/33729045/what-does-an-r-represent-before-a-string-in-python 
+https://docs.python.org/3/library/winreg.html 
+https://attack.mitre.org/techniques/T1036/ 
+https://www.hexacorn.com/blog/2018/05/28/beyond-good-ol-run-key-part-78-2/ 
+https://learn.microsoft.com/en-us/troubleshoot/windows-server/performance/windows-registry-advanced-users 
+https://attack.mitre.org/techniques/T1547/001/ 
+https://learn.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regcreatekeyexa 
+https://learn.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regsetkeyvaluea 
+https://www.geeksforgeeks.org/manipulating-windows-registry-using-winreg-in-python/ 
+https://stackoverflow.com/questions/42605055/creating-new-value-inside-registry-run-key-with-python 
+https://www.linkedin.com/pulse/windows-persistence-registry-run-keysstartup-folder-mangipudi/ 
+https://stackoverflow.com/questions/19672352/how-to-run-script-with-elevated-privilege-on-windows 
+https://serverfault.com/questions/225130/running-a-script-as-administrator-without-login-as-administrator 
+https://stackoverflow.com/questions/1566969/showing-the-uac-prompt-in-powershell-if-the-action-requires-elevation 
+https://stackoverflow.com/questions/27586052/turn-uac-off-with-python  
+https://forum.level1techs.com/t/disabling-uac-because-it-doesnt-provide-real-security/153681/21?page=2 
+https://github.com/isPique/Fuck-Windows-Security 
+https://help.fortinet.com/fsiem/Public_Resource_Access/7_1_1/rules/PH_RULE_Bypass_UAC_via_Fodhelper_exe.htm 
+https://www.elastic.co/security-labs/exploring-windows-uac-bypasses-techniques-and-detection-strategies 
+https://github.com/isPique/Fuck-Windows-Security/blob/main/Disable.ps1 
+https://www.atomicredteam.io/atomic-red-team/atomics/T1548.002 
+https://stackoverflow.com/questions/73085926/make-python-subprocess-run-in-powershell 
+https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/reg-add 
+https://stackoverflow.com/questions/47380378/run-process-as-admin-with-subprocess-run-in-python 
+https://www.quora.com/Where-are-the-registry-files-located-on-a-Windows-machine 
+https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.management/set-itemproperty?view=powershell-7.5 
+https://www.w3schools.com/python/module_os.asp 
+https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.management/set-itemproperty?view=powershell-7.5 
+https://docs.python.org/3/library/subprocess.html#subprocess.Popen 
+https://www.reddit.com/r/learnpython/comments/l1ac8w/can_i_control_a_powershell_session_from_python/ 
+https://www.phillipsj.net/posts/executing-powershell-from-python/ 
+https://stackoverflow.com/questions/14894993/running-windows-shell-commands-with-python 
+https://docs.python.org/3/library/os.html 
+https://medium.com/@tommelo/bypassing-windows-10-uac-with-python-aed3c835c4f0 
+https://bugs.python.org/issue44046 
+https://docs.python.org/3/library/winreg.html 
+https://bugs.python.org/issue44046 
+https://favtutor.com/blogs/tostring-convert-string-python 
+https://stuvel.eu/python-rsa-doc/usage.html#encryption-and-decryption 
+ https://www.google.com/search?q=classcryptography.hazmat.primitives.asymmetric.ed25519.Ed25519PrivateKey+how+to+encrypt&oq=classcryptography.hazmat.primitives.asymmetric.ed25519.Ed25519PrivateKey+how+to+encrypt&gs_lcrp=EgZjaHJvbWUyBggAEEUYOdIBCDQ2NDZqMGo3qAIAsAIA&sourceid=chrome&ie=UTF-8 
+https://www.google.com/search?q=serilization+encoding+meaning&oq=serilization+encoding+meaning&gs_lcrp=EgZjaHJvbWUyBggAEEUYOTIJCAEQIRgKGKABMgkIAhAhGAoYoAHSAQgzOTkxajBqN6gCALACAA&sourceid=chrome&ie=UTF-8 
+ChatGPT - Tailscale help
+https://stuvel.eu/python-rsa-doc/compatibility.html#openssl 
+https://stuvel.eu/python-rsa-doc/usage.html#generating-keys 
+https://pycryptodome.readthedocs.io/en/latest/src/public_key/rsa.html#Crypto.PublicKey.RSA.generate 
+https://cryptography.io/en/latest/hazmat/primitives/asymmetric/rsa/ 
+https://elc.github.io/python-security/chapters/07_Asymmetric_Encryption.html 
+https://www.google.com/search?q=python+asymmetric+encryption&sca_esv=58d2f398bc39e7fc&sxsrf=AHTn8zpNrpcpYRT1Aziwci-3XjXj8OZHlw%3A1740821646085&ei=jtTCZ4zzBI-o5NoPzJTOsQ4&oq=python+asy&gs_lp=Egxnd3Mtd2l6LXNlcnAiCnB5dGhvbiBhc3kqAggAMgsQABiABBiRAhiKBTILEAAYgAQYsQMYgwEyBBAAGAMyCxAAGIAEGLEDGIMBMgUQABiABDIFEAAYgAQyBRAAGIAEMgUQABiABDIFEAAYgAQyBRAAGIAESJpBUABYvzlwCHgBkAEAmAF6oAHCC6oBBDE3LjG4AQPIAQD4AQGYAhqgAroMwgIEECMYJ8ICChAAGIAEGEMYigXCAhEQLhiABBixAxjRAxiDARjHAcICEBAAGIAEGLEDGIMBGBQYhwLCAg0QABiABBixAxgUGIcCwgIIEAAYgAQYsQPCAgoQABiABBgUGIcCwgIFECEYoAHCAgcQABiABBgNwgIGEAAYDRgewgIIEAAYBRgNGB7CAggQABgIGA0YHsICChAAGIAEGLEDGA3CAgcQIRigARgKmAMAkgcEMjQuMqAHsYMB&sclient=gws-wiz-serp 
+https://www.geeksforgeeks.org/fernet-symmetric-encryption-using-cryptography-module-in-python/ 
+https://www.geeksforgeeks.org/how-to-encrypt-and-decrypt-strings-in-python/ 
+https://www.google.com/search?q=python+receiving+a+string+from+a+post+request&sca_esv=0ec52ea56f38d49c&sxsrf=AHTn8zoBGH7Y_b1idg8PRaP_XW6cJ894Pw%3A1740819501627&ei=LczCZ4uAJtqgptQPysmwgQ8&oq=python+reciveing+a+string+from+a+&gs_lp=Egxnd3Mtd2l6LXNlcnAiIXB5dGhvbiByZWNpdmVpbmcgYSBzdHJpbmcgZnJvbSBhICoCCAAyBxAhGKABGAoyBxAhGKABGAoyBxAhGKABGAoyBxAhGKABGAoyBxAhGAoYqwIyBxAhGAoYqwIyBxAhGAoYqwJIiztQ-A5Y7zRwBHgBkAEAmAFmoAHLEaoBBDI1LjG4AQPIAQD4AQGYAh6gAscSwgIKEAAYsAMY1gQYR8ICChAjGIAEGCcYigXCAhEQABiABBiRAhixAxiDARiKBcICDhAAGIAEGJECGLEDGIoFwgINEAAYgAQYsQMYQxiKBcICChAAGIAEGEMYigXCAgQQIxgnwgINEAAYgAQYsQMYFBiHAsICChAAGIAEGBQYhwLCAgsQABiABBiRAhiKBcICBRAAGIAEwgIFEC4YgATCAgYQABgWGB7CAggQABgWGAoYHsICBxAAGIAEGA3CAgYQABgNGB7CAgcQIxiwAhgnwgIIEAAYCBgNGB7CAgsQABiABBiGAxiKBcICBRAAGO8FwgIIEAAYgAQYogTCAgUQIRirAsICBRAhGJ8FmAMA4gMFEgExIECIBgGQBgiSBwQyNi40oAem-AE&sclient=gws-wiz-serp 
+https://requests.readthedocs.io/en/latest/user/quickstart/#make-a-request 
+https://stackoverflow.com/questions/34671217/in-flask-what-is-request-args-and-how-is-it-used 
+https://www.google.com/search?q=access+args+in+a+post+request+python&sca_esv=0ec52ea56f38d49c&sxsrf=AHTn8zrcQyht1vgwT1f0o6o6xPQPEzIewQ%3A1740818715474&ei=G8nCZ7LRHMPk5NoP8N7KwAU&ved=0ahUKEwjyyp2Jv-iLAxVDMlkFHXCvElgQ4dUDCBA&uact=5&oq=access+args+in+a+post+request+python&gs_lp=Egxnd3Mtd2l6LXNlcnAiJGFjY2VzcyBhcmdzIGluIGEgcG9zdCByZXF1ZXN0IHB5dGhvbjIFECEYoAEyBRAhGKABMgUQIRigATIFECEYoAEyBRAhGKABMgUQIRirAjIFECEYnwUyBRAhGJ8FMgUQIRifBTIFECEYnwVI1wpQiAJYtwlwAXgBkAEAmAFaoAHgBKoBATe4AQPIAQD4AQGYAgigAv8EwgIKEAAYsAMY1gQYR5gDAIgGAZAGCJIHATigB-M7&sclient=gws-wiz-serp 
+https://www.w3schools.com/python/module_requests.asp 
+https://requests.readthedocs.io/en/latest/user/quickstart/#passing-parameters-in-urls 
+https://www.geeksforgeeks.org/flask-http-methods-handle-get-post-requests/ 
+https://www.google.com/search?q=python+how+to+seek+to+the+start+of+a+file&oq=python+how+to+seek+to+the+start+of+a+file&gs_lcrp=EgZjaHJvbWUyCQgAEEUYORigATIHCAEQIRigATIHCAIQIRifBTIHCAMQIRifBTIHCAQQIRifBTIHCAUQIRifBTIHCAYQIRifBdIBCTYwODQ3ajBqN6gCALACAA&sourceid=chrome&ie=UTF-8 
+https://www.infosecinstitute.com/resources/malware-analysis/common-malware-persistence-mechanisms/ 
+https://tech-zealots.com/malware-analysis/malware-persistence-mechanisms/#:~:text=Malware%20achieves%20persistence%20by%20modifying,Microsoft%5CWindows%5CCurrentVersion%5CRun 
+https://docs.python.org/3/library/winreg.html#access-rights 
+https://docs.python.org/3/library/winreg.html 
+https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/command-line-syntax-key 
+https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/reg-add 
+https://www.google.com/search?q=reg+add+command&oq=reg+add+&gs_lcrp=EgZjaHJvbWUqBwgAEAAYgAQyBwgAEAAYgAQyBggBEEUYOTIHCAIQABiABDIHCAMQABiABDIHCAQQABiABDIGCAUQRRhBMgYIBhBFGDwyBggHEEUYPdIBCDE5NjJqMGo3qAIIsAIB8QXYXQP1e-avAw&sourceid=chrome&ie=UTF-8 
+https://www.fortinet.com/blog/threat-research/offense-and-defense-a-tale-of-two-sides-bypass-uac 
+https://www.google.com/search?q=running+sdclt.exe+windows+10+loading+itself+instead+of+run+key+value&oq=running+sdclt.exe+windows+10+loading+itself+instead+of+run+key+value&gs_lcrp=EgZjaHJvbWUyBggAEEUYOdIBCTEyOTY5ajBqN6gCALACAA&sourceid=chrome&ie=UTF-8 
+https://github.com/rootm0s/WinPwnage 
+https://github.com/rootm0s/WinPwnage/blob/master/winpwnage/functions/uac/uacMethod2.py 
+https://www.google.com/search?q=pyinstaller+compiler+multiple+files+into+ne&oq=pyinstaller+compiler+multiple+files+into+ne&gs_lcrp=EgZjaHJvbWUyBggAEEUYOTIJCAEQIRgKGKABMgkIAhAhGAoYoAEyCQgDECEYChigATIJCAQQIRgKGKABMgkIBRAhGAoYoAEyBwgGECEYnwUyBwgHECEYnwXSAQg2MTk4ajBqN6gCALACAA&sourceid=chrome&ie=UTF-8 
+https://www.google.com/search?q=fodhelper+exe+uac+bypass&oq=fodhelper.exe+uac+&gs_lcrp=EgZjaHJvbWUqCwgBEAAYFhgeGMcDMgYIABBFGDkyCwgBEAAYFhgeGMcDMg0IAhAAGIYDGIAEGIoFMg0IAxAAGIYDGIAEGIoFMgoIBBAAGIAEGKIEMgYIBRBFGDzSAQkxMDE0N2oxajeoAgCwAgA&sourceid=chrome&ie=UTF-8 
+https://tcm-sec.com/bypassing-defender-the-easy-way-fodhelper/ 
+https://answers.microsoft.com/en-us/windows/forum/all/does-fodhelperexe-occasionally-do-background-tasks/3d7d9db3-79f7-441a-aa88-0ae2165f4ea0 
+https://www.google.com/search?q=does+fodhelper.exe+run+on+startup&oq=does+fodhelper.exe+run+on+startup&gs_lcrp=EgZjaHJvbWUyCQgAEEUYORigATIHCAEQIRigATIHCAIQIRigATIHCAMQIRigATIHCAQQIRigAdIBCDcyNzlqMWo3qAIAsAIA&sourceid=chrome&ie=UTF-8 
+https://www.linkedin.com/pulse/abusing-fodhelperexe-bypass-uac-prompt-elevate-poc-abhishek-sharma-crqsc/ 
+https://answers.microsoft.com/en-us/windows/forum/all/how-to-add-programs-to-win-10-automatic-start-up/676ab7a4-e68d-4ab9-8c56-1452fc56fe43 
+https://www.reddit.com/r/learnpython/comments/le30qz/how_do_i_make_a_python_script_run_when_windows/ 
+https://stackoverflow.com/questions/4438020/how-to-start-a-python-file-while-windows-starts 
+https://www.google.com/search?q=adding+exe+script+to+%5CRUn+registry+but+it+is+not+running+the+script&oq=adding+exe+script+to+%5CRUn+registry+but+it+is+not+running+the+script&gs_lcrp=EgZjaHJvbWUyBggAEEUYOdIBCTE0MzkxajFqN6gCALACAA&sourceid=chrome&ie=UTF-8 
+https://superuser.com/questions/887946/program-not-launching-from-registry-run-key 
+https://attack.mitre.org/techniques/T1070/009/ 
+https://www.google.com/search?q=make+executable+run+on+startup+using+powershell&sca_esv=974b188b43388658&sxsrf=AHTn8zoUNdPjCDe-OkYoIRDyIL4nONeelg%3A1743900616166&ei=yM_xZ9zuCazX5NoPp_va6AU&ved=0ahUKEwjc8v-FmMKMAxWsK1kFHae9Fl0Q4dUDCBA&uact=5&oq=make+executable+run+on+startup+using+powershell&gs_lp=Egxnd3Mtd2l6LXNlcnAiL21ha2UgZXhlY3V0YWJsZSBydW4gb24gc3RhcnR1cCB1c2luZyBwb3dlcnNoZWxsMgUQIRigATIFECEYoAEyBRAhGKABMgUQIRirAjIFECEYnwUyBRAhGJ8FMgUQIRifBUizGlDNAljjGHABeAGQAQGYAacCoAG0D6oBBTcuOS4xuAEDyAEA-AEBmAIRoALdDcICChAAGLADGNYEGEfCAgYQABgWGB7CAgsQABiABBiGAxiKBcICBRAAGO8FwgIIEAAYogQYiQWYAwCIBgGQBgiSBwQ1LjEyoAfCcrIHBDQuMTK4B9QN&sclient=gws-wiz-serp 
+https://www.reddit.com/r/PowerShell/comments/k5iq7h/how_do_i_add_a_program_to_startup_folder/ 
+https://www.google.com/search?q=run+fodhelper.exe+on+startup&oq=run+fodhelper.exe+o&gs_lcrp=EgZjaHJvbWUqBwgBECEYoAEyBggAEEUYOTIHCAEQIRigATIHCAIQIRigATIHCAMQIRigATIHCAQQIRigATIHCAUQIRigATIHCAYQIRiPAjIHCAcQIRiPAjIHCAgQIRiPAtIBCTEzMDk3ajFqN6gCALACAA&sourceid=chrome&ie=UTF-8 
+https://foldsab.github.io/posts/UAC_bypass_using_fodhelper/ 
+https://www.cyberark.com/resources/threat-research-blog/persistence-techniques-that-persist 
+https://github.com/nadimjsaliby/fodhelper-bypass/blob/main/fodhelper.ps1 
+https://tech-zealots.com/malware-analysis/malware-persistence-mechanisms/ 
+https://www.google.com/search?q=python+adding+a+new+registry+key+using+reg+add&oq=python+adding+a+new+registry+key+using+reg+add&gs_lcrp=EgZjaHJvbWUyCQgAEEUYORigATIHCAEQIRigATIHCAIQIRigATIHCAMQIRigATIHCAQQIRigAdIBCDcyMTJqMGo3qAIAsAIA&sourceid=chrome&ie=UTF-8 
+https://attack.mitre.org/techniques/T1548/002/ 
+https://www.google.com/search?q=sdclt.exe+windows+10+uac+bypass&oq=sdclt.exe+windows+10+uac+bypass&gs_lcrp=EgZjaHJvbWUyCQgAEEUYORigAdIBCDU3MTVqMGo3qAIAsAIA&sourceid=chrome&ie=UTF-8 
+https://www.google.com/search?q=sdclt.exe+saying+windows+7+not+windows+10&oq=sdclt.exe+saying+windows+7+not+windows+10&gs_lcrp=EgZjaHJvbWUyBggAEEUYOTIHCAEQIRigATIHCAIQIRigATIHCAMQIRigATIHCAQQIRigATIHCAUQIRigAdIBCDk3NjFqMGo3qAIAsAIA&sourceid=chrome&ie=UTF-8 
+https://enigma0x3.net/2017/03/17/fileless-uac-bypass-using-sdclt-exe/ 
+https://www.attackiq.com/2018/05/14/bypassing-uac-using-registry-keys/ 
+https://superuser.com/questions/1607838/disable-uac-for-a-specific-program-windows-10 
+https://www.google.com/search?q=uac+bypass+for+running+prorgams+using+run+key&oq=uac+bypass+for+running+prorgams+using+run+key&gs_lcrp=EgZjaHJvbWUyBggAEEUYOTIJCAEQIRgKGKABMgkIAhAhGAoYoAEyCQgDECEYChigATIJCAQQIRgKGKABMgkIBRAhGAoYoAHSAQg3Mzk1ajBqN6gCALACAA&sourceid=chrome&ie=UTF-8 
+https://www.google.com/search?q=os.path.abspath+not+getting+right+file+path&oq=os.path.abspath+not+getting+right+file+path&gs_lcrp=EgZjaHJvbWUyBggAEEUYOTIHCAEQIRigATIHCAIQIRigATIHCAMQIRigATIHCAQQIRigATIHCAUQIRirAtIBCDc0MDhqMWo3qAIAsAIA&sourceid=chrome&ie=UTF-8 
+https://stackoverflow.com/questions/2293609/program-needing-elevation-in-startup-registry-key-windows-7 
+https://superuser.com/questions/1697842/windows-regkey-runonce-an-exe-with-a-space-in-the-name 
+https://stackoverflow.com/questions/29211547/exe-path-in-hkey-local-machine-run-doesnt-launch 
+https://attack.mitre.org/techniques/T1112/ 
+https://cocomelonc.github.io/tutorial/2022/04/20/malware-pers-1.html 
+https://www.google.com/search?q=malware+persistence+how+to+create+a+reference+under+registry+key&sca_esv=e34304c77ab91620&sxsrf=AHTn8zqDXyKhJViQiH7lLNYmV8G6jaqa3g%3A1743883898447&ei=eo7xZ7j9GsWe5NoP_ZSZgQY&oq=malware+persistence+how+to+create+a+referen&gs_lp=Egxnd3Mtd2l6LXNlcnAaAhgCIittYWx3YXJlIHBlcnNpc3RlbmNlIGhvdyB0byBjcmVhdGUgYSByZWZlcmVuKgIIADIFECEYoAEyBRAhGKABMgUQIRigATIFECEYoAFIk19QvwZY5lVwCXgBkAEAmAGaAaABuyOqAQUzNS4xNLgBA8gBAPgBAZgCOqAC5SXCAgoQABiwAxjWBBhHwgIEECMYJ8ICChAjGIAEGCcYigXCAgsQABiABBiRAhiKBcICDhAuGIAEGLEDGIMBGIoFwgIFEAAYgATCAggQABiABBixA8ICDhAAGIAEGLEDGIMBGIoFwgINEAAYgAQYsQMYQxiKBcICEBAuGIAEGNEDGEMYxwEYigXCAgoQABiABBhDGIoFwgIKEC4YgAQYQxiKBcICCxAAGIAEGLEDGIMBwgIOEAAYgAQYkQIYsQMYigXCAhAQABiABBixAxgUGIcCGIsDwgILEAAYgAQYsQMYiwPCAg0QLhiABBhDGOUEGIoFwgIREAAYgAQYkQIYsQMYigUYiwPCAg0QABiABBhDGIoFGIsDwgIHEAAYgAQYCsICBRAuGIAEwgIIEAAYgAQYxwPCAgYQABgWGB7CAggQABgWGAoYHsICBRAhGKsCwgIFECEYnwXCAggQABiABBiiBMICBRAAGO8FmAMAiAYBkAYIkgcFNDAuMTigB_HpArIHBTMxLjE4uAeoJQ&sclient=gws-wiz-serp 
+https://attack.mitre.org/software/S0045/ 
+https://attack.mitre.org/techniques/T1547/001/ 
+
+
+Coded: 
+
+https://www.sharepointdiary.com/2022/12/powershell-check-if-registry-key-exists.htm - Powershell commands
+
+
+https://gist.github.com/netbiosX/a114f8822eb20b115e33db55deee6692 - UAC Bypass
+
+https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.management/set-item?view=powershell-7.5  - Set-Item
+
+https://foldsab.github.io/posts/UAC_bypass_using_fodhelper/ - Fodhelper exploit
+https://www.linkedin.com/pulse/abusing-fodhelperexe-bypass-uac-prompt-elevate-poc-abhishek-sharma-crqsc/ - Fodhelper
+
+https://www.phillipsj.net/posts/executing-powershell-from-python/#:~:text=The%20code,can%20import%20the%20subprocess%20module.&text=Now%20we%20can%20make%20our,to%20execute%20our%20PowerShell%20command.&text=Let's%20make%20our%20Python%20file,commands%20we%20want%20to%20execute. - subprocess running correcting
+
+
+https://www.digitalocean.com/community/tutorials/python-system-command-os-subprocess-call  - subprocess.call 
+https://www.datacamp.com/tutorial/python-subprocess 
