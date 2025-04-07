@@ -5,7 +5,7 @@ This is a clipboard tool intended to be used for experimentation or for Red Team
 The tool works by copying the clipboard data every time Ctrl+C is used. This data is added to a local file. Each clipboard copy is exfiltrated to a server. Thes server stores its own copy of the file. Additionally, everytime Ctrl+C or Ctrl+V is used, the clipboard data is modified to have an invisible space at the end of it. The tool also establishes a foothold on the server once it is run. It modifies run keys so that it will be called any time fodhelper.exe (trusted Windows binary is called). It also adds a Runkey to the /Run folder which should run on startup, but that is currently not working.  
 
 ## Possible To-Do List/Ideas
-*Persistence Techniques - Debug and add more
+* Persistence Techniques - Debug and add more
 * Research password requirements and design an algorithm to flag what likely passwords are when they are added to the file
 * Make same function happen as Ctrl+C Ctrl+V when RightClick+Copy and RightClick+Paste happen
 * Could have some functionality so that when a password is copied, a chess puzzle pops up and the solution has to be implemented to disable the script for a short period of time or to get access back to the clipboard temporarily
