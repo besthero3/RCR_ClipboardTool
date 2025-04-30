@@ -45,6 +45,7 @@ def get_output():
         values.append(f.readline().split('=')[1].strip())
         values.append(f.readline().split('=')[1].strip())
 
+    #TODO: make sure whenever I am running the server script that it has access to the credentials
     token = values[0]
     channel_id = values[1]
     message = s
