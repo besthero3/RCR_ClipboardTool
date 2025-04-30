@@ -1,6 +1,5 @@
 import os
 import random
-
 import requests
 from flask import Flask, request
 import rsa

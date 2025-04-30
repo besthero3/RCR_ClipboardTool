@@ -3,7 +3,6 @@ import pyperclip
 import requests
 import schedule
 import time
-import subprocess
 from pynput import keyboard
 import keyboard
 import rsa

