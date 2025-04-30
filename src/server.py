@@ -1,5 +1,7 @@
 import os
 import random
+
+import requests
 from flask import Flask, request
 import rsa
 
@@ -37,12 +39,38 @@ def get_output():
     #data is written to the clipboard file
     server_clipboard_file.write(s + '\n')
 
+    #from PDM project
+    values = list()
+    with open("credentials", "r") as f:
+        values.append(f.readline().split('=')[1].strip())
+        values.append(f.readline().split('=')[1].strip())
+
+    token = values[0]
+    channel_id = values[1]
+    message = s
+
+    message_post(token, channel_id, message)
+
     #post returns something so we return a random int between 1 and 1000
     s = random.randint(1, 1000)
     return str(s)
 
+#https://blog.apify.com/python-discord-api/
+def message_post(token, channel_id, message):
+    url = f"https://discord.com/api/v9/channels/{channel_id}/messages"
+
+    headers = {
+        "Authorization": f"{token}",
+    }
+
+    data = {
+        "content": message
+    }
+
+    response = requests.post(url, headers=headers, json=data)
+
 def main():
     #Starts a server on the local host on port 12345
-    app.run(host="10.168.3.254", port=80)
+    app.run(host="127.0.0.1", port=80)
 
 main()
