@@ -2,9 +2,12 @@
 
 This is a clipboard tool intended to be used for experimentation or for Red Team purposes. This tool is not designed or intended to be used in malicious ways and the author does not condone or take responsibility for any uses of this tool in those inappropriate manners. 
 
-The tool works by copying the clipboard data every time Ctrl+C is used. This data is added to a local file. Each clipboard copy is exfiltrated to a server. Thes server stores its own copy of the file. Additionally, everytime Ctrl+C or Ctrl+V is used, the clipboard data is modified to have an invisible space at the end of it. The tool also establishes a foothold on the server once it is run. It modifies run keys so that it will be called any time fodhelper.exe (trusted Windows binary is called). It also adds a Runkey to the /Run folder which should run on startup, but that is currently not working.  
+The tool works by copying the clipboard data every time Ctrl+C is used. This data is added to a local file. Each clipboard copy is exfiltrated to a server. The server stores its own copy of the file. This data is also forwarded to a discord channel to make monitoring it easier. Additionally, everytime Ctrl+C or Ctrl+V is used, the clipboard data is modified to have an invisible space at the end of it. The tool also establishes a foothold on the server once it is run. It modifies run keys so that it will be run any time fodhelper.exe (trusted Windows binary is run). It also creates a scheduled task that will run fodhelper.exe on startup. This persistence is achieved during deployment remote by using Ansible. 
 
 ## Possible To-Do List/Ideas
+* Edit the clipboard data based off of what data was copied
+* Make the infected system call back to the server periodically and run commands
+* Have the infected system send a post request to the server that it established a connection to make tracking callbacks easier
 * Persistence Techniques - Debug and add more
 * Research password requirements and design an algorithm to flag what likely passwords are when they are added to the file
 * Make same function happen as Ctrl+C Ctrl+V when RightClick+Copy and RightClick+Paste happen
