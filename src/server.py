@@ -55,6 +55,28 @@ def get_output():
     s = random.randint(1, 1000)
     return str(s)
 
+@app.route("/connect", methods=["POST"])
+def show_when_connected() -> None:
+    s = request.data
+    s = rsa.decrypt(s, private).decode('utf8')
+    print(s)
+
+
+    values = list()
+    with open("credentials", "r") as f:
+        values.append(f.readline().split('=')[1].strip())
+        values.append(f.readline().split('=')[1].strip())
+
+    #TODO: make sure whenever I am running the server script that it has access to the credentials
+    token = values[0]
+    channel_id = values[1]
+    message = s
+    message_post(token, channel_id, message)
+    pass
+
+
+
+
 #https://blog.apify.com/python-discord-api/
 def message_post(token, channel_id, message):
     url = f"https://discord.com/api/v9/channels/{channel_id}/messages"
